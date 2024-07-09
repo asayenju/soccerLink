@@ -1,7 +1,7 @@
 import './App.css';
-import SignIn from './components/sign_in';
+import SignUp from './components/sign_up';
 function App() {
-  return <SignIn />;
+  return <SignUp />;
 }
 
 export default App;
