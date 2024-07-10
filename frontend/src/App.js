@@ -1,7 +1,7 @@
 import './App.css';
-import SignUp from './components/sign_up';
+import DataTable from './components/SearchPlayer';
 function App() {
-  return <SignUp />;
+  return <DataTable />;
 }
 
 export default App;
