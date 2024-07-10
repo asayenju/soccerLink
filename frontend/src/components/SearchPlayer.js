@@ -21,7 +21,7 @@ const columns = [
   { field: 'age', headerName: 'Age', type: 'number', width: 90, align: 'center', headerAlign: 'center' },
   { field: 'nationality', headerName: 'Nationality', width: 130, align: 'center', headerAlign: 'center' },
   { field: 'appearances', headerName: 'Appearances', width: 130, align: 'center', headerAlign: 'center' },
-  { field:'gamestarts', headerName: 'Game Starts', width: 90, align: 'center', headerAlign: 'center'},
+  { field: 'gamestarts', headerName: 'Game Starts', width: 130, align: 'center', headerAlign: 'center' },
   { field: 'minutesplayed', headerName: 'Minutes Played', width: 130, align: 'center', headerAlign: 'center' },
 ];
 
@@ -65,15 +65,27 @@ export default function DataTable() {
           variant="outlined"
           value={searchText}
           onChange={handleSearchChange}
-          style={{ marginBottom: 16, width: '100%', borderRadius: '100px' }} // Adjusted borderRadius for rounded corners
+          style={{ marginBottom: 16, width: '100%', borderRadius: '100px' }}
         />
-        <div style={{ height: 'calc(100% - 48px)', width: '100%' }}>
+        <div style={{ height: 400, width: '100%' }}>
           <DataGrid
             rows={filteredRows}
             columns={columns}
             pageSize={5}
             checkboxSelection
-            autoHeight
+            disableColumnMenu
+            components={{
+              Header: () => (
+                <div style={{ position: 'sticky', top: 0, zIndex: 1, background: 'white' }}>
+                  <DataGrid.Header />
+                </div>
+              ),
+              Footer: () => (
+                <div style={{ position: 'sticky', bottom: 0, zIndex: 1, background: 'white' }}>
+                  <DataGrid.Footer />
+                </div>
+              )
+            }}
           />
         </div>
       </div>
