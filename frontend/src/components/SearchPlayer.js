@@ -3,6 +3,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import TextField from '@mui/material/TextField';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Button from '@mui/material/Button';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 
@@ -17,6 +18,11 @@ const defaultTheme = createTheme({
   },
 });
 
+const handleViewClick = (id) => {
+  // Implement view functionality here
+  console.log(`Viewing row with id ${id}`);
+};
+
 const handleEditClick = (id) => {
   // Implement edit functionality here
   console.log(`Editing row with id ${id}`);
@@ -27,46 +33,76 @@ const handleDeleteClick = (id) => {
   console.log(`Deleting row with id ${id}`);
 };
 
-
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header' },
-  { field: 'firstName', headerName: 'First name', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header' },
-  { field: 'lastName', headerName: 'Last name', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header' },
-  { field: 'position', headerName: 'Position', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header' },
-  { field: 'playstyle', headerName: 'PlayStyle', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header' },
-  { field: 'age', headerName: 'Age', type: 'number', width: 90, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header' },
-  { field: 'nationality', headerName: 'Nationality', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header' },
-  { field: 'appearances', headerName: 'Appearances', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header' },
-  { field: 'gamestarts', headerName: 'Game Starts', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header' },
-  { field: 'minutesplayed', headerName: 'Minutes Played', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header' },
+  { field: 'id', headerName: 'ID', width: 70, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header', resizable: false },
+  { field: 'firstName', headerName: 'First name', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header', resizable: false },
+  { field: 'lastName', headerName: 'Last name', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header', resizable: false },
+  { field: 'position', headerName: 'Position', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header', resizable: false },
+  { field: 'playstyle', headerName: 'PlayStyle', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header', resizable: false },
+  { field: 'age', headerName: 'Age', type: 'number', width: 90, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header', resizable: false },
+  { field: 'nationality', headerName: 'Nationality', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header', resizable: false },
+  { field: 'appearances', headerName: 'Appearances', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header', resizable: false },
+  { field: 'gamestarts', headerName: 'Game Starts', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header', resizable: false },
+  { field: 'minutesplayed', headerName: 'Minutes Played', width: 130, align: 'center', headerAlign: 'center', headerClassName: 'super-app-theme--header', resizable: false },
   {
     field: 'actions',
     headerName: 'Actions',
-    width: 130,
+    flex: 1,
     align: 'center',
     headerAlign: 'center',
     headerClassName: 'super-app-theme--header',
     renderCell: (params) => (
-      <div>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         <Button
-          variant="outlined"
-          color="primary"
-          size="small"
-          startIcon={<EditIcon />}
-          onClick={() => handleEditClick(params.row.id)}
+          variant="contained"
+          sx={{
+            backgroundColor: 'purple',
+            color: 'white',
+            minWidth: '50px',
+            height: '50px',
+            marginRight: 1,
+            borderRadius: '50%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            '&:hover': {
+              backgroundColor: 'purple',
+            },
+          }}
+          onClick={() => handleViewClick(params.row.id)}
         >
+          <VisibilityIcon />
         </Button>
         <Button
-          variant="outlined"
-          color="secondary"
-          size="small"
-          startIcon={<DeleteIcon />}
-          onClick={() => handleDeleteClick(params.row.id)}
-          style={{width: 50,
-            height: 50,
-            borderRadius: 50}}
+          variant="contained"
+          color="primary"
+          sx={{
+            minWidth: '50px',
+            height: '50px',
+            marginRight: 1,
+            borderRadius: '50%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onClick={() => handleEditClick(params.row.id)}
         >
-
+          <EditIcon />
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
+          sx={{
+            minWidth: '50px',
+            height: '50px',
+            borderRadius: '50%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onClick={() => handleDeleteClick(params.row.id)}
+        >
+          <DeleteIcon />
         </Button>
       </div>
     ),
@@ -110,20 +146,23 @@ export default function DataTable() {
     <ThemeProvider theme={defaultTheme}>
       <div style={{ height: 'calc(100vh - 64px)', width: '100%', padding: '20px', boxSizing: 'border-box', overflowX: 'hidden' }}>
         <TextField
-          sx={{ borderRadius: 20 }}
           label="Search players"
           variant="outlined"
           value={searchText}
           onChange={handleSearchChange}
-          style={{ marginBottom: 16, width: '100%', borderRadius: 100 }}
+          sx={{
+            marginBottom: 2,
+            width: '100%',
+          }}
         />
-        <div style={{ height: 400, width: '100%' }}>
+        <div style={{ height: '88%', width: '100%' }}>
           <DataGrid
             sx={{
               '& .super-app-theme--header': {
                 backgroundColor: 'primary.main',
                 color: 'white',
               },
+              marginBottom: 500,
             }}
             rows={filteredRows}
             columns={columns}
