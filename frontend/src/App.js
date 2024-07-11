@@ -1,7 +1,7 @@
 import './App.css';
-import DataTable from './components/SearchPlayer';
+import PlayerProfile from './components/PlayerProfile';
 function App() {
-  return <DataTable />;
+  return <PlayerProfile />;
 }
 
 export default App;
