@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { Box, Avatar, Typography, Grid } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ResponsiveAppBar from './Header';
 
 const PlayerProfile = ({ name, age, position, email, phonenumber, nationality, academy, photoUrl, Appearances, gamestarts, minutesplayed }) => {
   return (
-    <Box sx={{ maxWidth: 1000, margin: 'auto', marginTop: 7, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontFamily: 'poppins-regular'}}>
+    <div>
+      <ResponsiveAppBar />
+      <Box sx={{ maxWidth: 1000, margin: 'auto', marginTop: 7, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', fontFamily: 'poppins-regular'}}>
       {/* Avatar Section */}
       <Box sx={{ display: 'flex', flexDirection: 'column', marginBottom: 2, justifyContent: 'center', alignItems: 'center'}}>
         <Avatar sx={{ width: 180, height: 180, backgroundColor: '#2b9348' }}>
@@ -76,6 +79,8 @@ const PlayerProfile = ({ name, age, position, email, phonenumber, nationality, a
         </Box>
       </Grid>
     </Box>
+    </div>
+    
   );
 };
 
