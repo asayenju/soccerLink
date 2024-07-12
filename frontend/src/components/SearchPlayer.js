@@ -10,7 +10,7 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 const defaultTheme = createTheme({
   palette: {
     primary: {
-      main: '#2b9348', // Change primary color to #2b9348
+      main: '#065F89', // Change primary color to #065F89
     },
     secondary: {
       main: '#c30010',

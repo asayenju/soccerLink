@@ -36,7 +36,7 @@ function ResponsiveAppBar() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#2b9348' }}>
+    <AppBar position="static" sx={{ backgroundColor: '#065F89' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -127,7 +127,7 @@ function ResponsiveAppBar() {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar sx={{ width: 40, height: 40 }}>
-                <AccountCircleIcon sx={{ fontSize: 40, backgroundColor:  '#2b9348'}} />
+                <AccountCircleIcon sx={{ fontSize: 40, backgroundColor:  '#065F89'}} />
                 </Avatar>
               </IconButton>
             </Tooltip>

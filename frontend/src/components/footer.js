@@ -5,7 +5,7 @@ import Container from '@mui/material/Container';
 
 function Footer() {
   return (
-    <Box sx={{ bgcolor: '#2b9348', color: 'white', py: 3 }}>
+    <Box sx={{ bgcolor: '#065F89', color: 'white', py: 3 }}>
       <Container maxWidth="xl">
         <Typography variant="body2" align="center">
           &copy; {new Date().getFullYear()} SoccerLinks. All rights reserved.

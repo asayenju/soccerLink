@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import AppearancesContainer from './AppearancesContainer';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -42,7 +43,7 @@ export default function BasicTabs() {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: '#2b9348' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', backgroundColor: '#065F89' }}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -63,7 +64,7 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        Appearances Content
+        <AppearancesContainer />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Shooting Content

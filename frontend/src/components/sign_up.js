@@ -17,7 +17,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const defaultTheme = createTheme( {palette: {
     primary: {
-      main: '#2b9348', // Change primary color to #70e000
+      main: '#065F89', // Change primary color to #70e000
     },
   },
 });
@@ -44,7 +44,7 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ width: 80, height: 80, bgcolor: '#2b9348' }}>
+          <Avatar sx={{ width: 80, height: 80, bgcolor: '#065F89' }}>
             <AccountCircleIcon sx={{ width: 60, height: 60 }}/>
           </Avatar>
           <Typography component="h1" variant="h5">
