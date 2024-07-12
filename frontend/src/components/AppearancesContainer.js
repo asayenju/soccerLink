@@ -34,3 +34,5 @@ export default function AppearancesContainer({games, minutes, starts, sub_off, s
     </React.Fragment>
   );
 }
+
+
