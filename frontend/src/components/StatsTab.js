@@ -7,6 +7,7 @@ import AppearancesContainer from './AppearancesContainer';
 import ShootingContainer from './ShootingContainer';
 import GoalkeepingContainer from './GoalkeepingContainer';
 import GoalsContainer from './GoalsContainer';
+import PassingContainer from './PassingContainer';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -79,7 +80,7 @@ export default function StatsTabs() {
         <GoalsContainer/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
-        Passing Content
+        <PassingContainer />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={5}>
         Duels Content
