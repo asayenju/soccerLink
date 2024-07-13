@@ -47,7 +47,7 @@ export default function NestedTabs({ totalStats, per90Stats }) {
           }}
         >
           <Tab label="Total" />
-          <Tab label="Per 90 Min" />
+          <Tab label="Per 90 Mins" />
         </Tabs>
         <NestedTabPanel value={value} index={0}>
           <Typography>{totalStats}</Typography>
