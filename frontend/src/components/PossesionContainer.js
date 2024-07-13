@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import NestedTabs from './NestedTabsForStatCards';
 
-export default function AppearancesContainer({handballs, cornersWon, touches, ballRecoveries, possessionLost,
+export default function PossessionContainer({handballs, cornersWon, touches, ballRecoveries, possessionLost,
     offsides, touchesInOppositionBox, timesTackled,
     handballs_per_90, cornersWon_per_90, touches_per_90, ballRecoveries_per_90, possessionLost_per_90,
     offsides_per_90, touchesInOppositionBox_per_90, timesTackled_per_90 }) {
