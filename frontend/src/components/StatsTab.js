@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import AppearancesContainer from './AppearancesContainer';
 import ShootingContainer from './ShootingContainer';
 import GoalkeepingContainer from './GoalkeepingContainer';
+import GoalsContainer from './GoalsContainer';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -36,7 +37,7 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function StatsTabs() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -75,7 +76,7 @@ export default function BasicTabs() {
         <GoalkeepingContainer/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        Goals Content
+        <GoalsContainer/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
         Passing Content

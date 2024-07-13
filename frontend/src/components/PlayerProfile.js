@@ -3,7 +3,7 @@ import { Box, Avatar, Typography, Grid } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ResponsiveAppBar from './Header';
 import Footer from './footer';
-import BasicTabs from './reactTab';
+import StatsTabs from './StatsTab';
 
 const PlayerProfile = ({ name, age, position, email, phonenumber, nationality, academy, photoUrl, Appearances, gamestarts, minutesplayed }) => {
   return (
@@ -78,7 +78,7 @@ const PlayerProfile = ({ name, age, position, email, phonenumber, nationality, a
           </Box>
         </Grid>
       </Box>
-      <BasicTabs />
+      <StatsTabs />
       <Footer />
     </div>
   );
