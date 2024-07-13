@@ -8,6 +8,10 @@ import ShootingContainer from './ShootingContainer';
 import GoalkeepingContainer from './GoalkeepingContainer';
 import GoalsContainer from './GoalsContainer';
 import PassingContainer from './PassingContainer';
+import DuelsContainer from './DuelsContainer';
+import DefenseContainer from './DefenseContainer';
+import DisciplineContainer from './DisciplineContainer';
+import PossessionContainer from './PossesionContainer';
 
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -83,16 +87,16 @@ export default function StatsTabs() {
         <PassingContainer />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={5}>
-        Duels Content
+        <DuelsContainer />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={6}>
-        Defence Content
+        <DefenseContainer />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={7}>
-        Discipline Content
+        <DisciplineContainer />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={8}>
-        Possession Content
+        <PossessionContainer />
       </CustomTabPanel>
     </Box>
   );
