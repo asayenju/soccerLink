@@ -60,7 +60,7 @@ export default function AppearancesContainer({
     }
   };
 
-  const renderTextField = (label, name, value, handleChange) => (
+  const renderTextField = (label, name, value, handleChange, showArrows = true, readOnly = false) => (
     <Grid container spacing={2} alignItems="center">
       <Grid item xs={3}>
         <Typography variant="body1" sx={{ color: 'white' }}>
@@ -73,13 +73,15 @@ export default function AppearancesContainer({
           name={name}
           value={value}
           onChange={handleInputChange}
+          disabled={!isForm || readOnly} // Disable if not in form mode or explicitly read-only
           InputLabelProps={{
             shrink: true,
           }}
           InputProps={{
+            readOnly: !isForm || readOnly, // Set read-only if not in form mode or explicitly read-only
             endAdornment: (
               <InputAdornment position="end">
-                {isForm && (
+                {isForm && showArrows && (
                   <>
                     <WhiteIconButton
                       aria-label="increase"
@@ -111,6 +113,7 @@ export default function AppearancesContainer({
               </InputAdornment>
             ),
           }}
+          sx={{ width: '100%' }}
         />
       </Grid>
     </Grid>
@@ -169,29 +172,19 @@ export default function AppearancesContainer({
   const per90Stats = (
     <Grid container spacing={2} direction="column">
       <Grid item>
-        <Typography variant="body1" sx={{ textAlign: 'left', color: 'white' }}>
-          Games: {games_per_90 ? games_per_90.toFixed(2) : 'N/A'}
-        </Typography>
+        {renderTextField('Games', 'games', games_per_90 ? games_per_90.toFixed(2) : '', handleChange, false, true)}
       </Grid>
       <Grid item>
-        <Typography variant="body1" sx={{ textAlign: 'left', color: 'white' }}>
-          Minutes: {minutes_per_90 ? minutes_per_90.toFixed(2) : 'N/A'}
-        </Typography>
+        {renderTextField('Minutes', 'minutes', minutes_per_90 ? minutes_per_90.toFixed(2) : '', handleChange, false, true)}
       </Grid>
       <Grid item>
-        <Typography variant="body1" sx={{ textAlign: 'left', color: 'white' }}>
-          Starts: {starts_per_90 ? starts_per_90.toFixed(2) : 'N/A'}
-        </Typography>
+        {renderTextField('Starts', 'starts', starts_per_90 ? starts_per_90.toFixed(2) : '', handleChange, false, true)}
       </Grid>
       <Grid item>
-        <Typography variant="body1" sx={{ textAlign: 'left', color: 'white' }}>
-          Subbed Off: {sub_off_per_90 ? sub_off_per_90.toFixed(2) : 'N/A'}
-        </Typography>
+        {renderTextField('Subbed Off', 'sub_off', sub_off_per_90 ? sub_off_per_90.toFixed(2) : '', handleChange, false, true)}
       </Grid>
       <Grid item>
-        <Typography variant="body1" sx={{ textAlign: 'left', color: 'white' }}>
-          Subbed On: {sub_on_per_90 ? sub_on_per_90.toFixed(2) : 'N/A'}
-        </Typography>
+        {renderTextField('Subbed On', 'sub_on', sub_on_per_90 ? sub_on_per_90.toFixed(2) : '', handleChange, false, true)}
       </Grid>
     </Grid>
   );
@@ -215,7 +208,7 @@ export default function AppearancesContainer({
             borderRadius: 2,
             textAlign: 'center',
             color: 'whitesmoke',
-            width: '80%',
+            width: '100%',
           }}
         >
           <Typography variant="h4" gutterBottom>

@@ -8,9 +8,9 @@ import NestedTabs from './NestedTabsForStatCards';
 import { styled } from '@mui/system';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import InputAdornment from '@mui/material/InputAdornment';
 
 const WhiteBorderTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
@@ -24,6 +24,17 @@ const WhiteBorderTextField = styled(TextField)({
     },
     '& .MuiOutlinedInput-notchedOutline': {
       borderColor: 'white',
+    },
+    '& input[type=number]': {
+      '-moz-appearance': 'textfield',
+      '&::-webkit-outer-spin-button': {
+        '-webkit-appearance': 'none',
+        margin: 0,
+      },
+      '&::-webkit-inner-spin-button': {
+        '-webkit-appearance': 'none',
+        margin: 0,
+      },
     },
   },
   '& label.Mui-focused': {
@@ -56,7 +67,8 @@ export default function ShootingContainer({
   shots_setpieces_per_90,
   penalties_per_90,
   woodwork_per_90,
-  shots_accuracy
+  shots_accuracy,
+  minutesPlayed
 }) {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -78,7 +90,17 @@ export default function ShootingContainer({
     return 'N/A';
   };
 
-  const renderTextField = (label, name, value, handleChange) => (
+  // Function to calculate per 90 min stats
+  const calculatePer90 = (stat) => {
+    const minutesPlayed = parseFloat(formData.minutes_played || 0);
+    if (minutesPlayed > 0) {
+      const per90 = (parseFloat(stat || 0) / minutesPlayed) * 90;
+      return per90.toFixed(2);
+    }
+    return 'N/A';
+  };
+
+  const renderTextField = (label, name, value, handleChange, showArrows = true) => (
     <Grid container spacing={2} alignItems="center">
       <Grid item xs={12} sm={4}>
         <Typography variant="body1" sx={{ color: 'white' }}>
@@ -97,7 +119,7 @@ export default function ShootingContainer({
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                {isForm && (
+                {isForm && showArrows && (
                   <>
                     <WhiteIconButton
                       aria-label="increase"
@@ -129,6 +151,7 @@ export default function ShootingContainer({
               </InputAdornment>
             ),
           }}
+          sx={{width: '100%'}}
         />
       </Grid>
     </Grid>
@@ -165,7 +188,7 @@ export default function ShootingContainer({
       </Grid>
       <Grid item>
         {isForm ? (
-          renderTextField('Shot Accuracy %', 'shots_accuracy', formData.shots_accuracy || '', handleChange)
+          renderTextField('Shot Accuracy %', 'shots_accuracy', formData.shots_accuracy || '', handleChange, false)
         ) : (
           <Typography variant="body1">
             Shot Accuracy %: {calculateShotAccuracy()}
@@ -214,44 +237,28 @@ export default function ShootingContainer({
   const per90Stats = (
     <Grid container spacing={2} direction="column">
       <Grid item>
-        <Typography variant="body1" sx={{ textAlign: 'left', color: 'white' }}>
-          Total Shots: {totalshots_per_90 ? totalshots_per_90.toFixed(2) : 'N/A'}
-        </Typography>
+        {renderTextField('Total Shots', 'totalshots_per_90', calculatePer90('totalshots', minutesPlayed), handleChange, false)}
       </Grid>
       <Grid item>
-        <Typography variant="body1" sx={{ textAlign: 'left', color: 'white' }}>
-          Shots On Target: {shotson_target_per_90 ? shotson_target_per_90.toFixed(2) : 'N/A'}
-        </Typography>
+        {renderTextField('Shots On Target', 'shotson_target_per_90', calculatePer90('shotson_target', minutesPlayed), handleChange, false)}
       </Grid>
       <Grid item>
-        <Typography variant="body1" sx={{ textAlign: 'left', color: 'white' }}>
-          Shots Off Target: {shotsoff_target_per_90 ? shotsoff_target_per_90.toFixed(2) : 'N/A'}
-        </Typography>
+      {renderTextField('Shots Off Target', 'shotsoff_target_per_90', calculatePer90('shotsoff_target', minutesPlayed), handleChange, false)}
       </Grid>
       <Grid item>
-        <Typography variant="body1" sx={{ textAlign: 'left', color: 'white' }}>
-          Shot Accuracy %: {shots_accuracy ? shots_accuracy.toFixed(2) : 'N/A'}
-        </Typography>
+      {renderTextField('Shot Accuracy %', 'shots_accuracy', calculateShotAccuracy('shotson_target', 'totalshots'), handleChange, false)}
       </Grid>
       <Grid item>
-        <Typography variant="body1" sx={{ textAlign: 'left', color: 'white' }}>
-          Shots Blocked: {shots_blocked_per_90 ? shots_blocked_per_90.toFixed(2) : 'N/A'}
-        </Typography>
+        {renderTextField('Shots Blocked', 'shots_blocked_per_90', calculatePer90('shots_blocked', minutesPlayed), handleChange, false)}
       </Grid>
       <Grid item>
-        <Typography variant="body1" sx={{ textAlign: 'left', color: 'white' }}>
-          Shots From Set Pieces: {shots_setpieces_per_90 ? shots_setpieces_per_90.toFixed(2) : 'N/A'}
-        </Typography>
+      {renderTextField('Shots From Set Pieces', 'shots_setpieces_per_90', calculatePer90('shots_setpieces', minutesPlayed), handleChange, false)}
       </Grid>
       <Grid item>
-        <Typography variant="body1" sx={{ textAlign: 'left', color: 'white' }}>
-          Penalties Taken: {penalties_per_90 ? penalties_per_90.toFixed(2) : 'N/A'}
-        </Typography>
+      {renderTextField('Penalties', 'penalties_per_90', calculatePer90('penalties', minutesPlayed), handleChange, false)}
       </Grid>
       <Grid item>
-        <Typography variant="body1" sx={{ textAlign: 'left', color: 'white' }}>
-          Hit Woodwork: {woodwork_per_90 ? woodwork_per_90.toFixed(2) : 'N/A'}
-        </Typography>
+      {renderTextField('Hit Woodwork', 'woodwork_per_90', calculatePer90('woodwork', minutesPlayed), handleChange, false)}
       </Grid>
     </Grid>
   );
@@ -275,7 +282,7 @@ export default function ShootingContainer({
             borderRadius: 2,
             textAlign: 'center',
             color: 'whitesmoke',
-            width: '80%',
+            width: '200%',
           }}
         >
           <Typography variant="h4" gutterBottom>
