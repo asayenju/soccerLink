@@ -102,7 +102,26 @@ export default function StatsTabs({ isForm = false }) {
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <ShootingContainer isForm={isForm} formData={formData} handleChange={handleInputChange} />
+        <ShootingContainer 
+        isForm={isForm} 
+        formData={formData} 
+        handleChange={handleInputChange}
+        totalshots={formData.totalshots}
+        shotson_target={formData.shotson_target}
+        shotsoff_target={formData.shotsoff_target}
+        shots_accuracy={formData.shotsoff_target}
+        shots_blocked={formData.shots_blocked}
+        shots_setpieces={formData.shots_setpieces}
+        penalties={formData.penalties}
+        woodwork={formData.woodwork}
+        totalshots_per_90={formData.totalshots_per_90}
+        shotson_target_per_90={formData.shotson_target_per_90}
+        shotsoff_target_per_90={formData.shotsoff_target_per_90}
+        shots_blocked_per_90={formData.shots_blocked_per_90}
+        shots_setpieces_per_90={formData.shots_setpieces_per_90}
+        penalties_per_90={formData.penalties_per_90}
+        woodwork_per_90={formData.woodwork_per_90}
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
         <GoalkeepingContainer isForm={isForm} formData={formData} handleChange={handleInputChange} />
