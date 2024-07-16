@@ -14,24 +14,28 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 const WhiteBorderTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
-    borderColor: 'white', // Set border color to white
-    color: 'white', // Set text color to white
+    borderColor: 'white',
+    color: 'white',
     '&:hover .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'white', // Hover state for border
+      borderColor: 'white',
     },
     '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'white', // Focused state for border
+      borderColor: 'white',
     },
     '& .MuiOutlinedInput-notchedOutline': {
-      borderColor: 'white', // Default state for border
+      borderColor: 'white',
     },
   },
   '& label.Mui-focused': {
-    color: 'white', // Label color when focused
+    color: 'white',
   },
   '& label': {
-    color: 'white', // Default label color
+    color: 'white',
   },
+});
+
+const WhiteIconButton = styled(IconButton)({
+  color: 'white',
 });
 
 export default function AppearancesContainer({
@@ -49,65 +53,70 @@ export default function AppearancesContainer({
   sub_off_per_90,
   sub_on_per_90,
 }) {
-  const renderTextField = (label, name, value, handleChange) => (
-    <Grid container spacing={2} alignItems="center">
-      <Grid item xs={3}>
-        <Typography variant="body1" sx={{ color: 'white' }}>
-          {label}
-        </Typography>
+  const renderTextField = (label, name, value, handleChange) => {
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      if (/^\d*$/.test(value)) {
+        handleChange(e);
+      }
+    };
+
+    return (
+      <Grid container spacing={2} alignItems="center">
+        <Grid item xs={3}>
+          <Typography variant="body1" sx={{ color: 'white' }}>
+            {label}
+          </Typography>
+        </Grid>
+        <Grid item xs={9}>
+          <WhiteBorderTextField
+            type="text"
+            name={name}
+            value={value}
+            onChange={handleInputChange}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  {isForm && (
+                    <>
+                      <WhiteIconButton
+                        aria-label="increase"
+                        size="small"
+                        onClick={() =>
+                          handleChange({
+                            target: { name, value: parseInt(value || '0') + 1 },
+                          })
+                        }
+                      >
+                        <ArrowUpwardIcon />
+                      </WhiteIconButton>
+                      <WhiteIconButton
+                        aria-label="decrease"
+                        size="small"
+                        onClick={() =>
+                          handleChange({
+                            target: {
+                              name,
+                              value: Math.max(parseInt(value || '0') - 1, 0),
+                            },
+                          })
+                        }
+                      >
+                        <ArrowDownwardIcon />
+                      </WhiteIconButton>
+                    </>
+                  )}
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Grid>
       </Grid>
-      <Grid item xs={9}>
-        <WhiteBorderTextField
-          type="text" // Set type to text
-          name={name}
-          value={value}
-          onChange={handleChange}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            inputProps: {
-              step: 1,
-              min: 0,
-            },
-            endAdornment: (
-              <InputAdornment position="end">
-                {isForm && (
-                  <>
-                    <IconButton
-                      aria-label="increase"
-                      size="small"
-                      onClick={() =>
-                        handleChange({
-                          target: { name, value: parseInt(value || '0') + 1 },
-                        })
-                      }
-                    >
-                      <ArrowUpwardIcon />
-                    </IconButton>
-                    <IconButton
-                      aria-label="decrease"
-                      size="small"
-                      onClick={() =>
-                        handleChange({
-                          target: {
-                            name,
-                            value: Math.max(parseInt(value || '0') - 1, 0),
-                          },
-                        })
-                      }
-                    >
-                      <ArrowDownwardIcon />
-                    </IconButton>
-                  </>
-                )}
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Grid>
-    </Grid>
-  );
+    );
+  };
 
   const totalStats = (
     <Grid container spacing={2} direction="column">
@@ -122,12 +131,7 @@ export default function AppearancesContainer({
       </Grid>
       <Grid item>
         {isForm ? (
-          renderTextField(
-            'Minutes',
-            'minutes',
-            formData.minutes || '',
-            handleChange
-          )
+          renderTextField('Minutes', 'minutes', formData.minutes || '', handleChange)
         ) : (
           <Typography variant="body1">
             Minutes: {minutes ? minutes : 'N/A'}
