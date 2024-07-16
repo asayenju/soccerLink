@@ -42,11 +42,23 @@ function a11yProps(index) {
   };
 }
 
-export default function StatsTabs() {
+export default function StatsTabs({ isForm = false }) {
   const [value, setValue] = React.useState(0);
+  const [formData, setFormData] = React.useState({
+    appearances: '',
+    // Add other stats here
+  });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   return (
@@ -56,7 +68,8 @@ export default function StatsTabs() {
           value={value}
           onChange={handleChange}
           aria-label="basic tabs example"
-          variant="fullWidth"
+          variant="scrollable"
+          scrollButtons="auto"
           textColor="inherit"
           TabIndicatorProps={{ style: { backgroundColor: 'white' } }}
         >
@@ -66,37 +79,98 @@ export default function StatsTabs() {
           <Tab label="Goals" {...a11yProps(3)} sx={{ flexGrow: 1, color: 'white' }} />
           <Tab label="Passing" {...a11yProps(4)} sx={{ flexGrow: 1, color: 'white' }} />
           <Tab label="Duels" {...a11yProps(5)} sx={{ flexGrow: 1, color: 'white' }} />
-          <Tab label="Defence" {...a11yProps(6)} sx={{ flexGrow: 1, color: 'white' }} />
+          <Tab label="Defense" {...a11yProps(6)} sx={{ flexGrow: 1, color: 'white' }} />
           <Tab label="Discipline" {...a11yProps(7)} sx={{ flexGrow: 1, color: 'white' }} />
           <Tab label="Possession" {...a11yProps(8)} sx={{ flexGrow: 1, color: 'white' }} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <AppearancesContainer />
+        <AppearancesContainer
+          isForm={isForm}
+          formData={formData}
+          handleChange={handleInputChange}
+          games={formData.games}
+          minutes={formData.minutes}
+          starts={formData.starts}
+          sub_off={formData.sub_off}
+          sub_on={formData.sub_on}
+          games_per_90={formData.games_per_90}
+          minutes_per_90={formData.minutes_per_90}
+          starts_per_90={formData.starts_per_90}
+          sub_off_per_90={formData.sub_off_per_90}
+          sub_on_per_90={formData.sub_on_per_90}
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <ShootingContainer/>
+        <ShootingContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange}
+          totalshots={formData.totalshots}
+          shotson_target={formData.shotson_target}
+          shotsoff_target={formData.shotsoff_target}
+          shots_accuracy={formData.shots_accuracy}
+          shots_blocked={formData.shots_blocked}
+          shots_setpieces={formData.shots_setpieces}
+          penalties={formData.penalties}
+          woodwork={formData.woodwork}
+          totalshots_per_90={formData.totalshots_per_90}
+          shotson_target_per_90={formData.shotson_target_per_90}
+          shotsoff_target_per_90={formData.shotsoff_target_per_90}
+          shots_blocked_per_90={formData.shots_blocked_per_90}
+          shots_setpieces_per_90={formData.shots_setpieces_per_90}
+          penalties_per_90={formData.penalties_per_90}
+          woodwork_per_90={formData.woodwork_per_90}
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <GoalkeepingContainer/>
+        <GoalkeepingContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange} 
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        <GoalsContainer/>
+        <GoalsContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange} 
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
-        <PassingContainer />
+        <PassingContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange} 
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={5}>
-        <DuelsContainer />
+        <DuelsContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange} 
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={6}>
-        <DefenseContainer />
+        <DefenseContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange} 
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={7}>
-        <DisciplineContainer />
+        <DisciplineContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange} 
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={8}>
-        <PossessionContainer />
+        <PossessionContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange} 
+        />
       </CustomTabPanel>
     </Box>
   );
