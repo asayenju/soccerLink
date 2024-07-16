@@ -12,7 +12,6 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import { styled } from '@mui/system';
 
-
 const WhiteBorderTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
     borderColor: 'white',
@@ -35,11 +34,9 @@ const WhiteBorderTextField = styled(TextField)({
   },
 });
 
-
 const WhiteIconButton = styled(IconButton)({
   color: 'white',
 });
-
 
 export default function GoalkeepingContainer({
   shotsfaced,
@@ -65,7 +62,6 @@ export default function GoalkeepingContainer({
     penalties_saved: penalties_saved || '',
   });
 
-
   // Function to calculate Save Percentage
   const calculateSavePercentage = () => {
     const savesMade = parseFloat(formData.savesmade || 0);
@@ -75,7 +71,6 @@ export default function GoalkeepingContainer({
     }
     return 'N/A';
   };
-
 
   // Function to calculate Saves In Box Percentage
   const calculateSavesInBoxPercentage = () => {
@@ -87,7 +82,6 @@ export default function GoalkeepingContainer({
     return 'N/A';
   };
 
-
   // Function to calculate Saves Out Box Percentage
   const calculateSavesOutBoxPercentage = () => {
     const savesOutBox = parseFloat(formData.savesmade_out_box || 0);
@@ -97,7 +91,6 @@ export default function GoalkeepingContainer({
     }
     return 'N/A';
   };
-
 
   // Function to calculate Penalties Saves Percentage
   const calculatePenaltiesSavesPercentage = () => {
@@ -109,7 +102,6 @@ export default function GoalkeepingContainer({
     return 'N/A';
   };
 
-
   // Function to calculate Per 90 Statistics
   const calculatePer90 = (stat, minutesPlayed) => {
     const totalStat = parseFloat(formData[stat] || 0);
@@ -119,7 +111,6 @@ export default function GoalkeepingContainer({
     return 'N/A';
   };
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -127,7 +118,6 @@ export default function GoalkeepingContainer({
       [name]: value,
     }));
   };
-
 
   const renderTextField = (label, name, value, handleChange, hasArrows = true) => (
     <Grid container spacing={2} alignItems="center">
@@ -176,11 +166,11 @@ export default function GoalkeepingContainer({
               </InputAdornment>
             ) : null,
           }}
+          sx={{ width: '100%' }} // Ensure all fields have equal width
         />
       </Grid>
     </Grid>
   );
-
 
   const totalStats = (
     <Grid container spacing={2} direction="column">
@@ -200,15 +190,12 @@ export default function GoalkeepingContainer({
         {renderTextField('Saves Out Box %', 'savesoutbox_per', calculateSavesOutBoxPercentage(), handleChange, false)}
       </Grid>
       <Grid item>{renderTextField('Penalties Faced', 'penalties_faced', formData.penalties_faced, handleChange)}</Grid>
-      <Grid item>
-        {renderTextField('Penalties Saved', 'penalties_saved', formData.penalties_saved, handleChange)}
-      </Grid>
+      <Grid item>{renderTextField('Penalties Saved', 'penalties_saved', formData.penalties_saved, handleChange)}</Grid>
       <Grid item>
         {renderTextField('Penalties Saves Accuracy %', 'penalties_saves_per', calculatePenaltiesSavesPercentage(), handleChange, false)}
       </Grid>
     </Grid>
   );
-
 
   const per90Stats = (
     <Grid container spacing={2} direction="column">
@@ -239,7 +226,6 @@ export default function GoalkeepingContainer({
     </Grid>
   );
 
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -259,7 +245,6 @@ export default function GoalkeepingContainer({
             borderRadius: 2,
             textAlign: 'center',
             color: 'whitesmoke',
-            width: '80%',
           }}
         >
           <Typography variant="h4" gutterBottom>

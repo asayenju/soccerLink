@@ -26,7 +26,7 @@ export default function NestedTabs({ totalStats, per90Stats }) {
 
   return (
     <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-      <Box sx={{ width: '80%' }}>
+      <Box sx={{ width: '100%' }}>
         <Tabs 
           value={value} 
           onChange={handleChange} 

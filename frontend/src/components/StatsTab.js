@@ -79,7 +79,7 @@ export default function StatsTabs({ isForm = false }) {
           <Tab label="Goals" {...a11yProps(3)} sx={{ flexGrow: 1, color: 'white' }} />
           <Tab label="Passing" {...a11yProps(4)} sx={{ flexGrow: 1, color: 'white' }} />
           <Tab label="Duels" {...a11yProps(5)} sx={{ flexGrow: 1, color: 'white' }} />
-          <Tab label="Defence" {...a11yProps(6)} sx={{ flexGrow: 1, color: 'white' }} />
+          <Tab label="Defense" {...a11yProps(6)} sx={{ flexGrow: 1, color: 'white' }} />
           <Tab label="Discipline" {...a11yProps(7)} sx={{ flexGrow: 1, color: 'white' }} />
           <Tab label="Possession" {...a11yProps(8)} sx={{ flexGrow: 1, color: 'white' }} />
         </Tabs>
@@ -103,46 +103,74 @@ export default function StatsTabs({ isForm = false }) {
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <ShootingContainer 
-        isForm={isForm} 
-        formData={formData} 
-        handleChange={handleInputChange}
-        totalshots={formData.totalshots}
-        shotson_target={formData.shotson_target}
-        shotsoff_target={formData.shotsoff_target}
-        shots_accuracy={formData.shotsoff_target}
-        shots_blocked={formData.shots_blocked}
-        shots_setpieces={formData.shots_setpieces}
-        penalties={formData.penalties}
-        woodwork={formData.woodwork}
-        totalshots_per_90={formData.totalshots_per_90}
-        shotson_target_per_90={formData.shotson_target_per_90}
-        shotsoff_target_per_90={formData.shotsoff_target_per_90}
-        shots_blocked_per_90={formData.shots_blocked_per_90}
-        shots_setpieces_per_90={formData.shots_setpieces_per_90}
-        penalties_per_90={formData.penalties_per_90}
-        woodwork_per_90={formData.woodwork_per_90}
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange}
+          totalshots={formData.totalshots}
+          shotson_target={formData.shotson_target}
+          shotsoff_target={formData.shotsoff_target}
+          shots_accuracy={formData.shots_accuracy}
+          shots_blocked={formData.shots_blocked}
+          shots_setpieces={formData.shots_setpieces}
+          penalties={formData.penalties}
+          woodwork={formData.woodwork}
+          totalshots_per_90={formData.totalshots_per_90}
+          shotson_target_per_90={formData.shotson_target_per_90}
+          shotsoff_target_per_90={formData.shotsoff_target_per_90}
+          shots_blocked_per_90={formData.shots_blocked_per_90}
+          shots_setpieces_per_90={formData.shots_setpieces_per_90}
+          penalties_per_90={formData.penalties_per_90}
+          woodwork_per_90={formData.woodwork_per_90}
         />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={2}>
-        <GoalkeepingContainer isForm={isForm} formData={formData} handleChange={handleInputChange} />
+        <GoalkeepingContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange} 
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={3}>
-        <GoalsContainer isForm={isForm} formData={formData} handleChange={handleInputChange} />
+        <GoalsContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange} 
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={4}>
-        <PassingContainer isForm={isForm} formData={formData} handleChange={handleInputChange} />
+        <PassingContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange} 
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={5}>
-        <DuelsContainer isForm={isForm} formData={formData} handleChange={handleInputChange} />
+        <DuelsContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange} 
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={6}>
-        <DefenseContainer isForm={isForm} formData={formData} handleChange={handleInputChange} />
+        <DefenseContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange} 
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={7}>
-        <DisciplineContainer isForm={isForm} formData={formData} handleChange={handleInputChange} />
+        <DisciplineContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange} 
+        />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={8}>
-        <PossessionContainer isForm={isForm} formData={formData} handleChange={handleInputChange} />
+        <PossessionContainer 
+          isForm={isForm} 
+          formData={formData} 
+          handleChange={handleInputChange} 
+        />
       </CustomTabPanel>
     </Box>
   );
