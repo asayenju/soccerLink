@@ -121,71 +121,104 @@ export default function AppearancesContainer({
 
   const totalStats = (
     <Grid container spacing={2} direction="column">
-      <Grid item>
-        {isForm ? (
-          renderTextField('Games', 'games', formData.games || '', handleChange)
-        ) : (
-          <Typography variant="body1">
-            Games: {games ? games : 'N/A'}
-          </Typography>
-        )}
-      </Grid>
-      <Grid item>
-        {isForm ? (
-          renderTextField('Minutes', 'minutes', formData.minutes || '', handleChange)
-        ) : (
-          <Typography variant="body1">
-            Minutes: {minutes ? minutes : 'N/A'}
-          </Typography>
-        )}
-      </Grid>
-      <Grid item>
-        {isForm ? (
-          renderTextField('Starts', 'starts', formData.starts || '', handleChange)
-        ) : (
-          <Typography variant="body1">
-            Starts: {starts ? starts : 'N/A'}
-          </Typography>
-        )}
-      </Grid>
-      <Grid item>
-        {isForm ? (
-          renderTextField('Subbed Off', 'sub_off', formData.sub_off || '', handleChange)
-        ) : (
-          <Typography variant="body1">
-            Subbed Off: {sub_off ? sub_off : 'N/A'}
-          </Typography>
-        )}
-      </Grid>
-      <Grid item>
-        {isForm ? (
-          renderTextField('Subbed On', 'sub_on', formData.sub_on || '', handleChange)
-        ) : (
-          <Typography variant="body1">
-            Subbed On: {sub_on ? sub_on : 'N/A'}
-          </Typography>
-        )}
-      </Grid>
+           <Grid item>
+  {isForm ? (
+    renderTextField('Games Per 90', 'games', formData.games_per_90 || '', handleChange, true)
+  ) : (
+    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+      Games: {games ? games.toFixed(2) : 'N/A'}
+    </Typography>
+  )}
+</Grid>
+<Grid item>
+  {isForm ? (
+    renderTextField('Minutes Per 90', 'minutes', formData.minutes_per_90 || '', handleChange, true)
+  ) : (
+    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+      Minutes: {minutes ? minutes.toFixed(2) : 'N/A'}
+    </Typography>
+  )}
+</Grid>
+<Grid item>
+  {isForm ? (
+    renderTextField('Starts Per 90', 'starts', formData.starts_per_90 || '', handleChange, true)
+  ) : (
+    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+      Starts: {starts ? starts.toFixed(2) : 'N/A'}
+    </Typography>
+  )}
+</Grid>
+<Grid item>
+  {isForm ? (
+    renderTextField('Subbed Off', 'sub_off', formData.sub_off_per_90 || '', handleChange, true)
+  ) : (
+    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+      Subbed Off: {sub_off ? sub_off.toFixed(2) : 'N/A'}
+    </Typography>
+  )}
+</Grid>
+<Grid item>
+  {isForm ? (
+    renderTextField('Subbed On', 'sub_on', formData.sub_on_per_90 || '', handleChange, true)
+  ) : (
+    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+      Subbed On: {sub_on ? sub_on.toFixed(2) : 'N/A'}
+    </Typography>
+  )}
+</Grid>
+
     </Grid>
   );
 
   const per90Stats = (
     <Grid container spacing={2} direction="column">
-      <Grid item>
-        {renderTextField('Games', 'games', games_per_90 ? games_per_90.toFixed(2) : '', handleChange, false, true)}
-      </Grid>
-      <Grid item>
-        {renderTextField('Minutes', 'minutes', minutes_per_90 ? minutes_per_90.toFixed(2) : '', handleChange, false, true)}
-      </Grid>
-      <Grid item>
-        {renderTextField('Starts', 'starts', starts_per_90 ? starts_per_90.toFixed(2) : '', handleChange, false, true)}
-      </Grid>
-      <Grid item>
-        {renderTextField('Subbed Off', 'sub_off', sub_off_per_90 ? sub_off_per_90.toFixed(2) : '', handleChange, false, true)}
-      </Grid>
-      <Grid item>
-        {renderTextField('Subbed On', 'sub_on', sub_on_per_90 ? sub_on_per_90.toFixed(2) : '', handleChange, false, true)}
-      </Grid>
+     <Grid item>
+  {isForm ? (
+    renderTextField('Games Per 90', 'games', formData.games_per_90 || '', handleChange, true)
+  ) : (
+    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+      Games: {games ? games.toFixed(2) : 'N/A'}
+    </Typography>
+  )}
+</Grid>
+<Grid item>
+  {isForm ? (
+    renderTextField('Minutes Per 90', 'minutes', formData.minutes_per_90 || '', handleChange, true)
+  ) : (
+    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+      Minutes: {minutes ? minutes.toFixed(2) : 'N/A'}
+    </Typography>
+  )}
+</Grid>
+<Grid item>
+  {isForm ? (
+    renderTextField('Starts Per 90', 'starts', formData.starts_per_90 || '', handleChange, true)
+  ) : (
+    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+      Starts: {starts ? starts.toFixed(2) : 'N/A'}
+    </Typography>
+  )}
+</Grid>
+<Grid item>
+  {isForm ? (
+    renderTextField('Subbed Off', 'sub_off', formData.sub_off_per_90 || '', handleChange, true)
+  ) : (
+    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+      Subbed Off: {sub_off ? sub_off.toFixed(2) : 'N/A'}
+    </Typography>
+  )}
+</Grid>
+<Grid item>
+  {isForm ? (
+    renderTextField('Subbed On', 'sub_on', formData.sub_on_per_90 || '', handleChange, true)
+  ) : (
+    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+      Subbed On: {sub_on ? sub_on.toFixed(2) : 'N/A'}
+    </Typography>
+  )}
+</Grid>
+
+
     </Grid>
   );
 

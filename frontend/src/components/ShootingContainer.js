@@ -91,11 +91,10 @@ export default function ShootingContainer({
   };
 
   // Function to calculate per 90 min stats
-  const calculatePer90 = (stat) => {
-    const minutesPlayed = parseFloat(formData.minutes_played || 0);
+  const calculatePer90 = (stat, minutesPlayed) => {
+    const totalStat = parseFloat(formData[stat] || 0);
     if (minutesPlayed > 0) {
-      const per90 = (parseFloat(stat || 0) / minutesPlayed) * 90;
-      return per90.toFixed(2);
+      return ((totalStat / minutesPlayed) * 90).toFixed(2);
     }
     return 'N/A';
   };
@@ -161,27 +160,27 @@ export default function ShootingContainer({
     <Grid container spacing={2} direction="column">
       <Grid item>
         {isForm ? (
-          renderTextField('Total Shots', 'totalshots', formData.totalshots || '', handleChange)
+          renderTextField('Total Shots', 'totalshots', formData.totalshots || '', handleChange, true)
         ) : (
-          <Typography variant="body1">
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
             Total Shots: {totalshots ? totalshots : 'N/A'}
           </Typography>
         )}
       </Grid>
       <Grid item>
         {isForm ? (
-          renderTextField('Shots On Target', 'shotson_target', formData.shotson_target || '', handleChange)
+          renderTextField('Shots On Target', 'shotson_target', formData.shotson_target || '', handleChange, true)
         ) : (
-          <Typography variant="body1">
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
             Shots On Target: {shotson_target ? shotson_target : 'N/A'}
           </Typography>
         )}
       </Grid>
       <Grid item>
         {isForm ? (
-          renderTextField('Shots Off Target', 'shotsoff_target', formData.shotsoff_target || '', handleChange)
+          renderTextField('Shots Off Target', 'shotsoff_target', formData.shotsoff_target || '', handleChange, true)
         ) : (
-          <Typography variant="body1">
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
             Shots Off Target: {shotsoff_target ? shotsoff_target : 'N/A'}
           </Typography>
         )}
@@ -190,75 +189,124 @@ export default function ShootingContainer({
         {isForm ? (
           renderTextField('Shot Accuracy %', 'shots_accuracy', formData.shots_accuracy || '', handleChange, false)
         ) : (
-          <Typography variant="body1">
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
             Shot Accuracy %: {calculateShotAccuracy()}
           </Typography>
         )}
       </Grid>
       <Grid item>
         {isForm ? (
-          renderTextField('Shots Blocked', 'shots_blocked', formData.shots_blocked || '', handleChange)
+          renderTextField('Shots Blocked', 'shots_blocked', formData.shots_blocked || '', handleChange, true)
         ) : (
-          <Typography variant="body1">
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
             Shots Blocked: {shots_blocked ? shots_blocked : 'N/A'}
           </Typography>
         )}
       </Grid>
       <Grid item>
         {isForm ? (
-          renderTextField('Shots From Set Pieces', 'shots_setpieces', formData.shots_setpieces || '', handleChange)
+          renderTextField('Shots From Set Pieces', 'shots_setpieces', formData.shots_setpieces || '', handleChange, true)
         ) : (
-          <Typography variant="body1">
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
             Shots From Set Pieces: {shots_setpieces ? shots_setpieces : 'N/A'}
           </Typography>
         )}
       </Grid>
       <Grid item>
         {isForm ? (
-          renderTextField('Penalties Taken', 'penalties', formData.penalties || '', handleChange)
+          renderTextField('Penalties Taken', 'penalties', formData.penalties || '', handleChange, true)
         ) : (
-          <Typography variant="body1">
-            Penalties Taken: {penalties ? penalties : 'N/A'}
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Penalties: {penalties ? penalties : 'N/A'}
           </Typography>
         )}
       </Grid>
       <Grid item>
         {isForm ? (
-          renderTextField('Hit Woodwork', 'woodwork', formData.woodwork || '', handleChange)
+          renderTextField('Hit Woodwork', 'woodwork', formData.woodwork || '', handleChange, true)
         ) : (
-          <Typography variant="body1">
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
             Hit Woodwork: {woodwork ? woodwork : 'N/A'}
           </Typography>
         )}
       </Grid>
+
     </Grid>
   );
 
   const per90Stats = (
     <Grid container spacing={2} direction="column">
       <Grid item>
-        {renderTextField('Total Shots', 'totalshots_per_90', calculatePer90('totalshots', minutesPlayed), handleChange, false)}
+        {isForm ? (
+          renderTextField('Total Shots Per 90', 'totalshots_per_90', calculatePer90('totalshots', minutesPlayed), handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Total Shots: {calculatePer90('totalshots', minutesPlayed)}
+          </Typography>
+        )}
       </Grid>
       <Grid item>
-        {renderTextField('Shots On Target', 'shotson_target_per_90', calculatePer90('shotson_target', minutesPlayed), handleChange, false)}
+        {isForm ? (
+          renderTextField('Shots On Target Per 90', 'shotson_target_per_90', calculatePer90('shotson_target', minutesPlayed), handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Shots On Target: {calculatePer90('shotson_target', minutesPlayed)}
+          </Typography>
+        )}
       </Grid>
       <Grid item>
-      {renderTextField('Shots Off Target', 'shotsoff_target_per_90', calculatePer90('shotsoff_target', minutesPlayed), handleChange, false)}
+        {isForm ? (
+          renderTextField('Shots Off Target Per 90', 'shotsoff_target_per_90', calculatePer90('shotsoff_target', minutesPlayed), handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Shots Off Target: {calculatePer90('shotsoff_target', minutesPlayed)}
+          </Typography>
+        )}
       </Grid>
       <Grid item>
-      {renderTextField('Shot Accuracy %', 'shots_accuracy', calculateShotAccuracy('shotson_target', 'totalshots'), handleChange, false)}
+        {isForm ? (
+          renderTextField('Shot Accuracy %', 'shots_accuracy', calculateShotAccuracy('shotson_target', 'totalshots'), handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Shot Accuracy %: {calculateShotAccuracy('shotson_target', 'totalshots')}
+          </Typography>
+        )}
       </Grid>
       <Grid item>
-        {renderTextField('Shots Blocked', 'shots_blocked_per_90', calculatePer90('shots_blocked', minutesPlayed), handleChange, false)}
+        {isForm ? (
+          renderTextField('Shots Blocked Per 90', 'shots_blocked_per_90', calculatePer90('shots_blocked', minutesPlayed), handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Shots Blocked: {calculatePer90('shots_blocked', minutesPlayed)}
+          </Typography>
+        )}
       </Grid>
       <Grid item>
-      {renderTextField('Shots From Set Pieces', 'shots_setpieces_per_90', calculatePer90('shots_setpieces', minutesPlayed), handleChange, false)}
+        {isForm ? (
+          renderTextField('Shots From Set Pieces Per 90', 'shots_setpieces_per_90', calculatePer90('shots_setpieces', minutesPlayed), handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Shots From Set Pieces: {calculatePer90('shots_setpieces', minutesPlayed)}
+          </Typography>
+        )}
       </Grid>
       <Grid item>
-      {renderTextField('Penalties', 'penalties_per_90', calculatePer90('penalties', minutesPlayed), handleChange, false)}
+        {isForm ? (
+          renderTextField('Penalties Per 90', 'penalties_per_90', calculatePer90('penalties', minutesPlayed), handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Penalties: {calculatePer90('penalties', minutesPlayed)}
+          </Typography>
+        )}
       </Grid>
       <Grid item>
-      {renderTextField('Hit Woodwork', 'woodwork_per_90', calculatePer90('woodwork', minutesPlayed), handleChange, false)}
+        {isForm ? (
+          renderTextField('Hit Woodwork Per 90', 'woodwork_per_90', calculatePer90('woodwork', minutesPlayed), handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Hit Woodwork: {calculatePer90('woodwork', minutesPlayed)}
+          </Typography>
+        )}
       </Grid>
     </Grid>
   );

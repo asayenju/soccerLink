@@ -39,6 +39,7 @@ const WhiteIconButton = styled(IconButton)({
 });
 
 export default function GoalkeepingContainer({
+  isForm,
   shotsfaced,
   savesmade,
   savesmade_in_box,
@@ -174,26 +175,97 @@ export default function GoalkeepingContainer({
 
   const totalStats = (
     <Grid container spacing={2} direction="column">
-      <Grid item>{renderTextField('Shots Faced', 'shotsfaced', formData.shotsfaced, handleChange)}</Grid>
-      <Grid item>{renderTextField('Saves Made', 'savesmade', formData.savesmade, handleChange)}</Grid>
       <Grid item>
-        {renderTextField('Saves Made Inside Box', 'savesmade_in_box', formData.savesmade_in_box, handleChange)}
+        {isForm ? (
+          renderTextField('Shots Faced', 'shotsfaced', formData.shotsfaced || '', handleChange)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Shots Faced: {formData.shotsfaced ? formData.shotsfaced : 'N/A'}
+          </Typography>
+        )}
       </Grid>
       <Grid item>
-        {renderTextField('Saves Made Outside Box', 'savesmade_out_box', formData.savesmade_out_box, handleChange)}
+        {isForm ? (
+          renderTextField('Saves Made', 'savesmade', formData.savesmade || '', handleChange)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Saves Made: {formData.savesmade ? formData.savesmade : 'N/A'}
+          </Typography>
+        )}
       </Grid>
-      <Grid item>{renderTextField('Saves Accuracy %', 'save_per', calculateSavePercentage(), handleChange, false)}</Grid>
       <Grid item>
-        {renderTextField('Saves In Box %', 'savesinbox_per', calculateSavesInBoxPercentage(), handleChange, false)}
+        {isForm ? (
+          renderTextField('Saves Made Inside Box', 'savesmade_in_box', formData.savesmade_in_box || '', handleChange)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Saves Made Inside Box: {formData.savesmade_in_box ? formData.savesmade_in_box : 'N/A'}
+          </Typography>
+        )}
       </Grid>
       <Grid item>
-        {renderTextField('Saves Out Box %', 'savesoutbox_per', calculateSavesOutBoxPercentage(), handleChange, false)}
+        {isForm ? (
+          renderTextField('Saves Made Outside Box', 'savesmade_out_box', formData.savesmade_out_box || '', handleChange)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Saves Made Outside Box: {formData.savesmade_out_box ? formData.savesmade_out_box : 'N/A'}
+          </Typography>
+        )}
       </Grid>
-      <Grid item>{renderTextField('Penalties Faced', 'penalties_faced', formData.penalties_faced, handleChange)}</Grid>
-      <Grid item>{renderTextField('Penalties Saved', 'penalties_saved', formData.penalties_saved, handleChange)}</Grid>
       <Grid item>
-        {renderTextField('Penalties Saves Accuracy %', 'penalties_saves_per', calculatePenaltiesSavesPercentage(), handleChange, false)}
+        {isForm ? (
+          renderTextField('Saves Accuracy %', 'save_per', calculateSavePercentage(), handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Saves Accuracy %: {calculateSavePercentage()}
+          </Typography>
+        )}
       </Grid>
+      <Grid item>
+        {isForm ? (
+          renderTextField('Saves In Box %', 'savesinbox_per', calculateSavesInBoxPercentage(), handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Saves In Box %: {calculateSavesInBoxPercentage()}
+          </Typography>
+        )}
+      </Grid>
+      <Grid item>
+        {isForm ? (
+          renderTextField('Saves Out Box %', 'savesoutbox_per', calculateSavesOutBoxPercentage(), handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Saves Out Box %: {calculateSavesOutBoxPercentage()}
+          </Typography>
+        )}
+      </Grid>
+      <Grid item>
+        {isForm ? (
+          renderTextField('Penalties Faced', 'penalties_faced', formData.penalties_faced || '', handleChange)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Penalties Faced: {formData.penalties_faced ? formData.penalties_faced : 'N/A'}
+          </Typography>
+        )}
+      </Grid>
+      <Grid item>
+        {isForm ? (
+          renderTextField('Penalties Saved', 'penalties_saved', formData.penalties_saved || '', handleChange)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Penalties Saved: {formData.penalties_saved ? formData.penalties_saved : 'N/A'}
+          </Typography>
+        )}
+      </Grid>
+      <Grid item>
+        {isForm ? (
+          renderTextField('Penalties Saves Accuracy %', 'penalties_saves_per', calculatePenaltiesSavesPercentage(), handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+            Penalties Saves Accuracy %: {calculatePenaltiesSavesPercentage()}
+          </Typography>
+        )}
+      </Grid>
+
     </Grid>
   );
 
@@ -245,6 +317,7 @@ export default function GoalkeepingContainer({
             borderRadius: 2,
             textAlign: 'center',
             color: 'whitesmoke',
+            width: '200%',
           }}
         >
           <Typography variant="h4" gutterBottom>

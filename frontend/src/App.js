@@ -1,7 +1,7 @@
 import './App.css';
-import PlayerAddEdit from './components/PlayerAddEdit';
+import PlayerProfile from './components/PlayerProfile';
 function App() {
-  return <PlayerAddEdit />;
+  return <PlayerProfile />;
 }
 
 export default App;

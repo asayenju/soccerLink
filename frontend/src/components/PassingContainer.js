@@ -5,6 +5,12 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import NestedTabs from './NestedTabsForStatCards';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
+import IconButton from '@mui/material/IconButton';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import { styled } from '@mui/system';
 
 const WhiteBorderTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
@@ -85,7 +91,6 @@ export default function PassingContainer({
       passcomp: passcomp || '',
       assists: assists || '',
       chances: chances || '',
-      pass: pass || '',
       oppass_atmpt: oppass_atmpt || '',
       oppass_comp: oppass_comp || '',
       longpass_atmpt: longpass_atmpt || '',
@@ -176,8 +181,8 @@ export default function PassingContainer({
     const totalStats = (
         <>
           <Grid container spacing={2} direction="column">
-            <Grid item sx={{display: "flex", flexDirection: "row"}}>
-              <Typography variant="b4">Passes Attempted: {passatmpt?passatmpt: "N/A"}</Typography>
+            <Grid item>
+            {renderTextField('Pass Attempts', 'passatmpt', formData.passatmpt, handleChange)}
             </Grid>
             <Grid item sx={{display: "flex", flexDirection: "row"}}>
               <Typography variant="b4">Passes Completed: {passcomp?passcomp: "N/A"}</Typography>
@@ -321,7 +326,7 @@ export default function PassingContainer({
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="sm" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh'}}>
-        <Box sx={{ bgcolor: '#065F89', p: 4, borderRadius: 2, textAlign: 'center', color: "whitesmoke", width: "80%"}}>
+        <Box sx={{ bgcolor: '#065F89', p: 4, borderRadius: 2, textAlign: 'center', color: "whitesmoke", width: "100%"}}>
           <Typography variant="h4" gutterBottom>Passing</Typography>
           <NestedTabs totalStats={totalStats} per90Stats={per90Stats} />
         </Box>
