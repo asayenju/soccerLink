@@ -12,7 +12,6 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import InputAdornment from '@mui/material/InputAdornment';
 import NestedTabs from './NestedTabsForStatCards';
-import { right } from '@popperjs/core';
 
 const WhiteBorderTextField = styled(TextField)({
   '& .MuiOutlinedInput-root': {
@@ -167,7 +166,7 @@ export default function GoalsContainer({
   const totalStats = (
     <Grid container spacing={2} direction="column">
       <Grid item>
-      {renderTextField('Goals', 'goals', formData.goal, handleChange)}
+      {renderTextField('Goals', 'goals', formData.goals, handleChange)}
       </Grid>
       <Grid item>
       {renderTextField('Home Goals', 'homegoals', formData.homegoals, handleChange)}
