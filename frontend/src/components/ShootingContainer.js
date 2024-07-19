@@ -187,7 +187,7 @@ export default function ShootingContainer({
       </Grid>
       <Grid item>
         {isForm ? (
-          renderTextField('Shot Accuracy %', 'shots_accuracy', formData.shots_accuracy || '', handleChange, false)
+          renderTextField('Shot Accuracy %', 'shots_accuracy', calculateShotAccuracy(), handleChange, false)
         ) : (
           <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
             Shot Accuracy %: {calculateShotAccuracy()}
