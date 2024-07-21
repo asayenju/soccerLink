@@ -123,7 +123,7 @@ export default function AppearancesContainer({
     <Grid container spacing={2} direction="column">
            <Grid item>
   {isForm ? (
-    renderTextField('Games Per 90', 'games', formData.games_per_90 || '', handleChange, true)
+    renderTextField('Games', 'games', formData.games_per_90 || '', handleChange, true)
   ) : (
     <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
       Games: {games ? games.toFixed(2) : 'N/A'}
@@ -132,7 +132,7 @@ export default function AppearancesContainer({
 </Grid>
 <Grid item>
   {isForm ? (
-    renderTextField('Minutes Per 90', 'minutes', formData.minutes_per_90 || '', handleChange, true)
+    renderTextField('Minutes', 'minutes', formData.minutes_per_90 || '', handleChange, true)
   ) : (
     <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
       Minutes: {minutes ? minutes.toFixed(2) : 'N/A'}
@@ -141,7 +141,7 @@ export default function AppearancesContainer({
 </Grid>
 <Grid item>
   {isForm ? (
-    renderTextField('Starts Per 90', 'starts', formData.starts_per_90 || '', handleChange, true)
+    renderTextField('Starts', 'starts', formData.starts_per_90 || '', handleChange, true)
   ) : (
     <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
       Starts: {starts ? starts.toFixed(2) : 'N/A'}
@@ -174,7 +174,7 @@ export default function AppearancesContainer({
     <Grid container spacing={2} direction="column">
      <Grid item>
   {isForm ? (
-    renderTextField('Games Per 90', 'games', formData.games_per_90 || '', handleChange, true)
+    renderTextField('Games', 'games', formData.games_per_90 || '', handleChange, true)
   ) : (
     <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
       Games: {games ? games.toFixed(2) : 'N/A'}
@@ -183,7 +183,7 @@ export default function AppearancesContainer({
 </Grid>
 <Grid item>
   {isForm ? (
-    renderTextField('Minutes Per 90', 'minutes', formData.minutes_per_90 || '', handleChange, true)
+    renderTextField('Minutes', 'minutes', formData.minutes_per_90 || '', handleChange, true)
   ) : (
     <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
       Minutes: {minutes ? minutes.toFixed(2) : 'N/A'}
@@ -192,7 +192,7 @@ export default function AppearancesContainer({
 </Grid>
 <Grid item>
   {isForm ? (
-    renderTextField('Starts Per 90', 'starts', formData.starts_per_90 || '', handleChange, true)
+    renderTextField('Starts', 'starts', formData.starts_per_90 || '', handleChange, true)
   ) : (
     <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
       Starts: {starts ? starts.toFixed(2) : 'N/A'}
