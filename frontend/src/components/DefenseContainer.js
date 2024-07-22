@@ -98,19 +98,19 @@ export default function DefenseContainer({
         };
     
     const calculatePer90 = (stat) => {
-    const totalStat = parseFloat(formData[stat] || 0);
-    if (minutesPlayed > 0) {
-        return ((totalStat / minutesPlayed) * 90).toFixed(2);
-    }
-    return 'N/A';
+        const totalStat = parseFloat(formData[stat] || 0);
+        if (minutesPlayed > 0) {
+            return ((totalStat / minutesPlayed) * 90).toFixed(2);
+        }
+        return 'N/A';
     };
     
     const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-    }));
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
     };
     
     const renderTextField = (label, name, value, handleChange, hasArrows = true) => (
