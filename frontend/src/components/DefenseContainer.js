@@ -172,14 +172,14 @@ export default function DefenseContainer({
             <Grid container spacing={2} direction="column">
                 <Grid item sx={{ display: "flex", flexDirection: "row" }}>
                     {isForm ? (
-                        renderTextField('Shots Faced', 'shotsOnTargetFaced', shotsOnTargetFaced, handleChange, false, true)
+                        renderTextField('Shots Faced', 'shotsOnTargetFaced', formData.shotsOnTargetFaced, handleChange)
                     ) : (
                         <Typography variant="b4">Shots Faced: {shotsOnTargetFaced ? shotsOnTargetFaced : 'N/A'}</Typography>
                     )}
                 </Grid>
                 <Grid item sx={{ display: "flex", flexDirection: "row" }}>
                     {isForm ? (
-                        renderTextField('Shots Faced Inside Box', 'shotsOnTargetFacedInsideBox', shotsOnTargetFacedInsideBox, handleChange, false, true)
+                        renderTextField('Shots Faced Inside Box', 'shotsOnTargetFacedInsideBox', formData.shotsOnTargetFacedInsideBox, handleChange)
                     ) : (
                         <Typography variant="b4">Shots Faced Inside Box: {shotsOnTargetFacedInsideBox ? shotsOnTargetFacedInsideBox : 'N/A'}</Typography>
                     )}
@@ -195,7 +195,7 @@ export default function DefenseContainer({
                 </Grid>
                 <Grid item sx={{ display: "flex", flexDirection: "row" }}>
                     {isForm ? (
-                        renderTextField('Shots Faced Outside Box', 'shotsOnTargetFacedOutsideBox', shotsOnTargetFacedOutsideBox, handleChange, false, true)
+                        renderTextField('Shots Faced Outside Box', 'shotsOnTargetFacedOutsideBox', formData.shotsOnTargetFacedOutsideBox, handleChange)
                     ) : (
                         <Typography variant="b4">Shots Faced Outside Box: {shotsOnTargetFacedOutsideBox ? shotsOnTargetFacedOutsideBox : 'N/A'}</Typography>
                     )}
@@ -211,21 +211,21 @@ export default function DefenseContainer({
                 </Grid>
                 <Grid item sx={{ display: "flex", flexDirection: "row" }}>
                     {isForm ? (
-                        renderTextField('Clearances', 'clearances', clearances, handleChange, false, true)
+                        renderTextField('Clearances', 'clearances', formData.clearances, handleChange)
                     ) : (
                         <Typography variant="b4">Clearances: {clearances ? clearances : 'N/A'}</Typography>
                     )}
                 </Grid>
                 <Grid item sx={{ display: "flex", flexDirection: "row" }}>
                     {isForm ? (
-                        renderTextField('Interceptions', 'interceptions', interceptions, handleChange, false, true)
+                        renderTextField('Interceptions', 'interceptions', formData.interceptions, handleChange)
                     ) : (
                         <Typography variant="b4">Interceptions: {interceptions ? interceptions : 'N/A'}</Typography>
                     )}
                 </Grid>
                 <Grid item sx={{ display: "flex", flexDirection: "row" }}>
                     {isForm ? (
-                        renderTextField('Blocked Shots', 'blockedShots', blockedShots, handleChange, false, true)
+                        renderTextField('Blocked Shots', 'blockedShots', formData.blockedShots, handleChange)
                     ) : (
                         <Typography variant="b4">Blocked Shots: {blockedShots ? blockedShots : 'N/A'}</Typography>
                     )}
@@ -241,14 +241,14 @@ export default function DefenseContainer({
                 </Grid>
                 <Grid item sx={{ display: "flex", flexDirection: "row" }}>
                     {isForm ? (
-                        renderTextField('Clean Sheets', 'cleanSheets', cleanSheets, handleChange, false, true)
+                        renderTextField('Clean Sheets', 'cleanSheets', formData.cleanSheets, handleChange)
                     ) : (
                         <Typography variant="b4">Clean Sheets: {cleanSheets ? cleanSheets : 'N/A'}</Typography>
                     )}
                 </Grid>
                 <Grid item sx={{ display: "flex", flexDirection: "row" }}>
                     {isForm ? (
-                        renderTextField('Goals Conceded', 'goalsConceded', goalsConceded, handleChange, false, true)
+                        renderTextField('Goals Conceded', 'goalsConceded', formData.goalsConceded, handleChange)
                     ) : (
                         <Typography variant="b4">Goals Conceded: {goalsConceded ? goalsConceded : 'N/A'}</Typography>
                     )}
@@ -264,7 +264,7 @@ export default function DefenseContainer({
                 </Grid>
                 <Grid item sx={{ display: "flex", flexDirection: "row" }}>
                     {isForm ? (
-                        renderTextField('Goals Conceded Inside Box', 'goalsConcededInsideBox', goalsConcededInsideBox, handleChange, false, true)
+                        renderTextField('Goals Conceded Inside Box', 'goalsConcededInsideBox', formData.goalsConcededInsideBox, handleChange)
                     ) : (
                         <Typography variant="b4">Goals Conceded Inside Box: {goalsConcededInsideBox ? goalsConcededInsideBox : 'N/A'}</Typography>
                     )}
@@ -280,7 +280,7 @@ export default function DefenseContainer({
                 </Grid>
                 <Grid item sx={{ display: "flex", flexDirection: "row" }}>
                     {isForm ? (
-                        renderTextField('Goals Conceded Outside Box', 'goalsConcededOutsideBox', goalsConcededOutsideBox, handleChange, false, true)
+                        renderTextField('Goals Conceded Outside Box', 'goalsConcededOutsideBox', formData.goalsConcededOutsideBox, handleChange)
                     ) : (
                         <Typography variant="b4">Goals Conceded Outside Box: {goalsConcededOutsideBox ? goalsConcededOutsideBox : 'N/A'}</Typography>
                     )}
@@ -296,7 +296,7 @@ export default function DefenseContainer({
                 </Grid>
                 <Grid item sx={{ display: "flex", flexDirection: "row" }}>
                     {isForm ? (
-                        renderTextField('Own Goals', 'ownGoals', ownGoals, handleChange, false, true)
+                        renderTextField('Own Goals', 'ownGoals', formData.ownGoals, handleChange)
                     ) : (
                         <Typography variant="b4">Own Goals: {ownGoals ? ownGoals : 'N/A'}</Typography>
                     )}
@@ -312,7 +312,7 @@ export default function DefenseContainer({
                 </Grid>
                 <Grid item sx={{ display: "flex", flexDirection: "row" }}>
                     {isForm ? (
-                        renderTextField('Penalty Goals Conceded', 'penaltyGoalsConceded', penaltyGoalsConceded, handleChange, false, true)
+                        renderTextField('Penalty Goals Conceded', 'penaltyGoalsConceded', formData.penaltyGoalsConceded, handleChange)
                     ) : (
                         <Typography variant="b4">Penalty Goals Conceded: {penaltyGoalsConceded ? penaltyGoalsConceded : 'N/A'}</Typography>
                     )}
@@ -523,7 +523,7 @@ export default function DefenseContainer({
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="sm" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50vh' }}>
-        <Box sx={{ bgcolor: '#065F89', p: 4, borderRadius: 2, textAlign: 'center', color: "whitesmoke", width: "80%" }}>
+        <Box sx={{ bgcolor: '#065F89', p: 4, borderRadius: 2, textAlign: 'center', color: "whitesmoke", width: "100%" }}>
           <Typography variant="h4" gutterBottom>Defense</Typography>
           <NestedTabs totalStats={totalStats} per90Stats={per90Stats} />
         </Box>
