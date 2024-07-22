@@ -56,7 +56,8 @@ export default function DuelsContainer({
     aerialDuelSuccessPercentage, 
     groundDuelsContested, 
     groundDuelsWon, 
-    duelsWon, 
+    duelsWon,
+    duelsWon_per,
     groundDuelSuccessPercentage, 
     takeOnsOverrun_per_90, 
     duelsContested_per_90, 
@@ -266,7 +267,7 @@ export default function DuelsContainer({
             </Grid>
             <Grid item>
                 {isForm ? (
-                    renderTextField('Aerial Duels Contested', 'aerialDuelsContested', FormData.maerialDuelsContested, handleChange)
+                    renderTextField('Aerial Duels Contested', 'aerialDuelsContested', formData.aerialDuelsContested, handleChange)
                 ) : (
                     <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                         Aerial Duels Contested: {aerialDuelsContested ? aerialDuelsContested : 'N/A'}
@@ -311,16 +312,25 @@ export default function DuelsContainer({
             </Grid>
             <Grid item>
                 {isForm ? (
-                    renderTextField('Duels Won', 'duelsWon', calculateAcc('duelsContested', 'duelsWon'), handleChange, false, false)
+                    renderTextField('Duels Won', 'duelsWon', formData.duelsWon, handleChange)
                 ) : (
                     <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                        Duels Won: {calculateAcc('duelsContested', 'duelsWon') ? calculateAcc('duelsContested', 'duelsWon') : 'N/A'}
+                        Duels Won: {duelsWon ? duelsWon : 'N/A'}
                     </Typography>
                 )}
             </Grid>
             <Grid item>
                 {isForm ? (
-                    renderTextField('Ground Duel Success %', 'groundDuelSuccessPercentage', calculateAcc('groundDuelsContested', 'groundDuelsWon'), handleChange, false, false)
+                    renderTextField('Duels Won', 'duelsWon_per', calculateAcc('duelsContested', 'duelsWon'), handleChange, false, true)
+                ) : (
+                    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                        Duels Win Accuracy %: {calculateAcc('duelsContested', 'duelsWon') ? calculateAcc('duelsContested', 'duelsWon') : 'N/A'}
+                    </Typography>
+                )}
+            </Grid>
+            <Grid item>
+                {isForm ? (
+                    renderTextField('Ground Duel Success %', 'groundDuelSuccessPercentage', calculateAcc('groundDuelsContested', 'groundDuelsWon'), handleChange, false, true)
                 ) : (
                     <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                         Ground Duel Success %: {calculateAcc('groundDuelsContested', 'groundDuelsWon') ? calculateAcc('groundDuelsContested', 'groundDuelsWon') : 'N/A'}
