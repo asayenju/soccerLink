@@ -231,7 +231,7 @@ export default function DuelsContainer({
             </Grid>
             <Grid item>
                 {isForm ? (
-                    renderTextField('Take-on Success %', 'takeOnSuccessPercentage', calculateAcc('takeOnsOverrun', 'takeOnsCompleted'), handleChange, false, false)
+                    renderTextField('Take-on Success %', 'takeOnSuccessPercentage', calculateAcc('takeOnsOverrun', 'takeOnsCompleted'), handleChange, false, true)
                 ) : (
                     <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
                         Take-on Success %: {calculateAcc('takeOnsOverrun', 'takeOnsCompleted') ? calculateAcc('takeOnsOverrun', 'takeOnsCompleted') : 'N/A'}
