@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Avatar, Typography, Grid, TextField, InputAdornment, IconButton, Box } from '@mui/material';
+import { Typography, Grid, TextField, InputAdornment, IconButton, Box, Button } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import CheckIcon from '@mui/icons-material/Check';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { styled } from '@mui/system';
 
 // Styled components
@@ -38,8 +39,25 @@ const WhiteIconButton = styled(IconButton)({
   color: 'white',
 });
 
-const Biography = ({ isForm, name, age, position, email, phonenumber, nationality, academy, photoUrl, formData }) => {
+const AddPhotoButton = styled(Button)({
+  width: 300,
+  height: 300,
+  backgroundColor: '#065F89',
+  color: 'white',
+  borderRadius: '50%',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+  '&:hover': {
+    backgroundColor: '#065F89',
+    opacity: 0.8,
+  },
+});
+
+const Biography = ({ isForm, name, age, position, email, phonenumber, nationality, academy, formData }) => {
   const [formState, setFormState] = React.useState(formData || {});
+  const fileInputRef = React.useRef(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -49,7 +67,21 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
     }));
   };
 
-  const renderTextField = (label, name, value, handleChange, showArrows = true, readOnly = false) => (
+  const handlePhotoClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      console.log('Selected file:', file.name);
+      // Add additional file handling logic here if needed
+    }
+  };
+
+  const renderTextField = (label, name, value, handleChange, showArrows = true, readOnly = false, type = 'text', placeholder = '', required = false) => (
     <Grid container direction="column" spacing={1}>
       <Grid item>
         <Typography variant="b1" sx={{ color: 'white', marginBottom: '4px', whiteSpace: 'nowrap' }}>
@@ -58,11 +90,13 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
       </Grid>
       <Grid item>
         <WhiteBorderTextField
-          type="text"
+          type={type}
           name={name}
           value={value}
           onChange={handleChange}
           disabled={!isForm || readOnly}
+          placeholder={placeholder}
+          required={required}
           InputLabelProps={{
             shrink: true,
           }}
@@ -112,7 +146,7 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
       </Grid>
     </Grid>
   );
-  
+
   return (
     <Box
       display="flex"
@@ -121,21 +155,29 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
       alignItems="center"
       width="100%"
       padding="20px"
-      sx={{ overflowX: 'hidden' }}  // Prevent horizontal scrolling
+      sx={{ overflowX: 'auto' }}  // Enable horizontal scrolling
     >
-      {/* Avatar Section */}
+      {/* Add Photo Section */}
       <Box
         display="flex"
         flexDirection="column"
         justifyContent="center"
         alignItems="center"
-        marginRight={{ xs: 0, sm: '30vh' }} // Increased separation between Avatar and Biography section
+        marginRight={{ xs: 0, sm: '30vh' }} // Increased separation between Add Photo and Biography section
         marginBottom={{ xs: '20px', sm: 0 }}
       >
-        <Avatar sx={{ width: 300, height: 300, backgroundColor: '#065F89', marginBottom: 2 }}>
-          {/* Avatar as before */}
-        </Avatar>
-        <Typography variant="h6" sx={{ textAlign: 'center', color: '#065F89' }}>
+        <AddPhotoButton onClick={handlePhotoClick}>
+          <PersonAddIcon sx={{ fontSize: 100 }} />
+          <Typography variant="body1">Add Photo</Typography>
+        </AddPhotoButton>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          style={{ display: 'none' }}
+          onChange={handleFileChange}
+        />
+        <Typography variant="h6" sx={{ textAlign: 'center', color: '#065F89', marginTop: 2 }}>
           {name || 'Name'}
         </Typography>
       </Box>
@@ -149,7 +191,7 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               {isForm ? (
-                renderTextField('Age', 'age', formState.age || '', handleInputChange, true)
+                renderTextField('Age', 'age', formState.age || '', handleInputChange, true, false, 'text', '', true)  // Age is required
               ) : (
                 <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
                   Age: {age || 'N/A'}
@@ -167,7 +209,7 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
             </Grid>
             <Grid item xs={12} sm={6}>
               {isForm ? (
-                renderTextField('Email', 'email', formState.email || '')
+                renderTextField('Email', 'email', formState.email || '', handleInputChange, false, false, 'email', 'johndoe@example.com', true)  // Email is required
               ) : (
                 <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
                   Email: {email || 'N/A'}
@@ -176,7 +218,7 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
             </Grid>
             <Grid item xs={12} sm={6}>
               {isForm ? (
-                renderTextField('Phone', 'phonenumber', formState.phonenumber || '', handleInputChange)
+                renderTextField('Phone', 'phonenumber', formState.phonenumber || '', handleInputChange, false, false, 'tel', '123456789', true)  // Phone number is required
               ) : (
                 <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
                   Tel.: {phonenumber || 'N/A'}
