@@ -57,6 +57,7 @@ const AddPhotoButton = styled(Button)({
 
 const Biography = ({ isForm, name, age, position, email, phonenumber, nationality, academy, formData }) => {
   const [formState, setFormState] = React.useState(formData || {});
+  const [photo, setPhoto] = React.useState(null);
   const fileInputRef = React.useRef(null);
 
   const handleInputChange = (e) => {
@@ -76,8 +77,11 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      console.log('Selected file:', file.name);
-      // Add additional file handling logic here if needed
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setPhoto(event.target.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -167,8 +171,23 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
         marginBottom={{ xs: '20px', sm: 0 }}
       >
         <AddPhotoButton onClick={handlePhotoClick}>
-          <PersonAddIcon sx={{ fontSize: 100 }} />
-          <Typography variant="body1">Add Photo</Typography>
+          {photo ? (
+            <img
+              src={photo}
+              alt="avatar"
+              style={{
+                width: '100%',
+                height: '100%',
+                borderRadius: '50%',
+                objectFit: 'cover',
+              }}
+            />
+          ) : (
+            <>
+              <PersonAddIcon sx={{ fontSize: 100 }} />
+              <Typography variant="body1">Add Photo</Typography>
+            </>
+          )}
         </AddPhotoButton>
         <input
           ref={fileInputRef}
@@ -239,12 +258,51 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
                 renderTextField('Academy', 'academy', formState.academy || '', handleInputChange, true)
               ) : (
                 <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>
-                  Academy/School: {academy || 'N/A'}
+                  Academy: {academy || 'N/A'}
                 </Typography>
               )}
             </Grid>
           </Grid>
         </Box>
+        <div 
+        style={{
+            display: 'flex', 
+            justifyContent: 'space-between', // Evenly space buttons
+            margin: '1vh',
+            width: '50%', // Adjust as needed for overall container width
+            marginLeft: 'auto',
+            marginRight: 'auto', // Center the button group horizontally
+        }}
+        >
+            <Button 
+                variant="contained" 
+                size="large" 
+                sx={{ 
+                width: '45%', // Width of each button relative to the container
+                backgroundColor: 'green',
+                '&:hover': {
+                  backgroundColor: '#50C878', // Change hover color to light green
+                },
+              }}
+            >
+                
+                SAVE
+            </Button>
+            <Button 
+                variant="contained" 
+                size="large" 
+                sx={{ 
+                width: '45%', 
+                backgroundColor: '#B81D13',
+                '&:hover': {
+                    backgroundColor: '#ED4337', // Change hover color to light green
+                },
+                }}
+            >
+                DELETE
+            </Button>
+            </div>
+
       </Box>
     </Box>
   );
