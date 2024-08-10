@@ -60,6 +60,24 @@ export default function AppearancesContainer({
     }
   };
 
+  const handleIncrement = (name, value) => {
+    handleChange({
+      target: {
+        name,
+        value: parseInt(value || '0') + 1,
+      },
+    });
+  };
+
+  const handleDecrement = (name, value) => {
+    handleChange({
+      target: {
+        name,
+        value: Math.max(parseInt(value || '0') - 1, 0),
+      },
+    });
+  };
+
   const renderTextField = (label, name, value, handleChange, showArrows = true, readOnly = false) => (
     <Grid container spacing={2} alignItems="center">
       <Grid item xs={3}>
@@ -86,25 +104,14 @@ export default function AppearancesContainer({
                     <WhiteIconButton
                       aria-label="increase"
                       size="small"
-                      onClick={() =>
-                        handleChange({
-                          target: { name, value: parseInt(value || '0') + 1 },
-                        })
-                      }
+                      onClick={() => handleIncrement(name, value)}
                     >
                       <ArrowUpwardIcon />
                     </WhiteIconButton>
                     <WhiteIconButton
                       aria-label="decrease"
                       size="small"
-                      onClick={() =>
-                        handleChange({
-                          target: {
-                            name,
-                            value: Math.max(parseInt(value || '0') - 1, 0),
-                          },
-                        })
-                      }
+                      onClick={() => handleDecrement(name, value)}
                     >
                       <ArrowDownwardIcon />
                     </WhiteIconButton>
@@ -121,104 +128,101 @@ export default function AppearancesContainer({
 
   const totalStats = (
     <Grid container spacing={2} direction="column">
-           <Grid item>
-  {isForm ? (
-    renderTextField('Games', 'games', formData.games_per_90 || '', handleChange, true)
-  ) : (
-    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      Games: {games ? games.toFixed(2) : 'N/A'}
-    </Typography>
-  )}
-</Grid>
-<Grid item>
-  {isForm ? (
-    renderTextField('Minutes', 'minutes', formData.minutes_per_90 || '', handleChange, true)
-  ) : (
-    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      Minutes: {minutes ? minutes.toFixed(2) : 'N/A'}
-    </Typography>
-  )}
-</Grid>
-<Grid item>
-  {isForm ? (
-    renderTextField('Starts', 'starts', formData.starts_per_90 || '', handleChange, true)
-  ) : (
-    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      Starts: {starts ? starts.toFixed(2) : 'N/A'}
-    </Typography>
-  )}
-</Grid>
-<Grid item>
-  {isForm ? (
-    renderTextField('Subbed Off', 'sub_off', formData.sub_off_per_90 || '', handleChange, true)
-  ) : (
-    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      Subbed Off: {sub_off ? sub_off.toFixed(2) : 'N/A'}
-    </Typography>
-  )}
-</Grid>
-<Grid item>
-  {isForm ? (
-    renderTextField('Subbed On', 'sub_on', formData.sub_on_per_90 || '', handleChange, true)
-  ) : (
-    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      Subbed On: {sub_on ? sub_on.toFixed(2) : 'N/A'}
-    </Typography>
-  )}
-</Grid>
-
+      <Grid item>
+        {isForm ? (
+          renderTextField('Games', 'games', formData.games || '', handleChange, true)
+        ) : (
+          <Typography variant="h5" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            Games: {games ? games.toFixed(2) : 'N/A'}
+          </Typography>
+        )}
+      </Grid>
+      <Grid item>
+        {isForm ? (
+          renderTextField('Minutes', 'minutes', formData.minutes || '', handleChange, true)
+        ) : (
+          <Typography variant="h5" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            Minutes: {minutes ? minutes.toFixed(2) : 'N/A'}
+          </Typography>
+        )}
+      </Grid>
+      <Grid item>
+        {isForm ? (
+          renderTextField('Starts', 'starts', formData.starts || '', handleChange, true)
+        ) : (
+          <Typography variant="h5" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            Starts: {starts ? starts.toFixed(2) : 'N/A'}
+          </Typography>
+        )}
+      </Grid>
+      <Grid item>
+        {isForm ? (
+          renderTextField('Subbed Off', 'sub_off', formData.sub_off || '', handleChange, true)
+        ) : (
+          <Typography variant="h5" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            Subbed Off: {sub_off ? sub_off.toFixed(2) : 'N/A'}
+          </Typography>
+        )}
+      </Grid>
+      <Grid item>
+        {isForm ? (
+          renderTextField('Subbed On', 'sub_on', formData.sub_on || '', handleChange, true)
+        ) : (
+          <Typography variant="h5" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            Subbed On: {sub_on ? sub_on.toFixed(2) : 'N/A'}
+          </Typography>
+        )}
+      </Grid>
     </Grid>
   );
 
   const per90Stats = (
     <Grid container spacing={2} direction="column">
-     <Grid item>
-  {isForm ? (
-    renderTextField('Games', 'games', formData.games_per_90 || '', handleChange, true)
-  ) : (
-    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      Games: {games ? games.toFixed(2) : 'N/A'}
-    </Typography>
-  )}
-</Grid>
-<Grid item>
-  {isForm ? (
-    renderTextField('Minutes', 'minutes', formData.minutes_per_90 || '', handleChange, true)
-  ) : (
-    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      Minutes: {minutes ? minutes.toFixed(2) : 'N/A'}
-    </Typography>
-  )}
-</Grid>
-<Grid item>
-  {isForm ? (
-    renderTextField('Starts', 'starts', formData.starts_per_90 || '', handleChange, true)
-  ) : (
-    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      Starts: {starts ? starts.toFixed(2) : 'N/A'}
-    </Typography>
-  )}
-</Grid>
-<Grid item>
-  {isForm ? (
-    renderTextField('Subbed Off', 'sub_off', formData.sub_off_per_90 || '', handleChange, true)
-  ) : (
-    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      Subbed Off: {sub_off ? sub_off.toFixed(2) : 'N/A'}
-    </Typography>
-  )}
-</Grid>
-<Grid item>
-  {isForm ? (
-    renderTextField('Subbed On', 'sub_on', formData.sub_on_per_90 || '', handleChange, true)
-  ) : (
-    <Typography variant="h5" sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-      Subbed On: {sub_on ? sub_on.toFixed(2) : 'N/A'}
-    </Typography>
-  )}
-</Grid>
-
-
+      <Grid item>
+        {isForm ? (
+          renderTextField('Games', 'games', formData.games_per_90 || '', handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            Games: {games ? games.toFixed(2) : 'N/A'}
+          </Typography>
+        )}
+      </Grid>
+      <Grid item>
+        {isForm ? (
+          renderTextField('Minutes', 'minutes', formData.minutes_per_90 || '', handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            Minutes: {minutes ? minutes.toFixed(2) : 'N/A'}
+          </Typography>
+        )}
+      </Grid>
+      <Grid item>
+        {isForm ? (
+          renderTextField('Starts', 'starts', formData.starts_per_90 || '', handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            Starts: {starts ? starts.toFixed(2) : 'N/A'}
+          </Typography>
+        )}
+      </Grid>
+      <Grid item>
+        {isForm ? (
+          renderTextField('Subbed Off', 'sub_off', formData.sub_off_per_90 || '', handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            Subbed Off: {sub_off ? sub_off.toFixed(2) : 'N/A'}
+          </Typography>
+        )}
+      </Grid>
+      <Grid item>
+        {isForm ? (
+          renderTextField('Subbed On', 'sub_on', formData.sub_on_per_90 || '', handleChange, false)
+        ) : (
+          <Typography variant="h5" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            Subbed On: {sub_on ? sub_on.toFixed(2) : 'N/A'}
+          </Typography>
+        )}
+      </Grid>
     </Grid>
   );
 
