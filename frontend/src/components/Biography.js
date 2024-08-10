@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { Avatar, Typography, Grid, Button, TextField, InputAdornment, IconButton, Box } from '@mui/material';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import { Avatar, Typography, Grid, TextField, InputAdornment, IconButton, Box } from '@mui/material';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import CheckIcon from '@mui/icons-material/Check';
@@ -27,6 +25,12 @@ const WhiteBorderTextField = styled(TextField)({
   },
   '& label': {
     color: 'white',
+  },
+  '& .MuiInputLabel-formControl': {
+    top: '-5px',
+  },
+  '& .MuiOutlinedInput-input': {
+    padding: '12.5px 14px',
   },
 });
 
@@ -109,7 +113,6 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
     </Grid>
   );
   
-
   return (
     <Box
       display="flex"
@@ -118,6 +121,7 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
       alignItems="center"
       width="100%"
       padding="20px"
+      sx={{ overflowX: 'hidden' }}  // Prevent horizontal scrolling
     >
       {/* Avatar Section */}
       <Box
