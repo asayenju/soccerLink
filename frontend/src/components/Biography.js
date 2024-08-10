@@ -34,7 +34,7 @@ const WhiteIconButton = styled(IconButton)({
   color: 'white',
 });
 
-const Biography = ({ isForm, name, age, position, email, phonenumber, nationality, academy, photoUrl, Appearances, formData, handleChange }) => {
+const Biography = ({ isForm, name, age, position, email, phonenumber, nationality, academy, photoUrl, formData }) => {
   const [formState, setFormState] = React.useState(formData || {});
 
   const handleInputChange = (e) => {
@@ -48,7 +48,7 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
   const renderTextField = (label, name, value, handleChange, showArrows = true, readOnly = false) => (
     <Grid container spacing={2} alignItems="center">
       <Grid item xs={4}>
-        <Typography variant="body1" sx={{ color: 'white' }}>
+        <Typography variant="b1" sx={{ color: 'white' }}>
           {label}
         </Typography>
       </Grid>
@@ -110,10 +110,10 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
   );
 
   return (
-    <Box display="flex" flexDirection="row" justifyContent="space-between" width="100%" gap="20px" margin="0 auto">
+    <Box display="flex" flexDirection="row" justifyContent="space-between" alignItems="flex-start" width="100%" padding="20px">
       {/* Avatar Section */}
-      <Box display="flex" flexDirection="column" marginBottom={2} justifyContent="center" alignItems="center" marginX="10px">
-        <Avatar sx={{ width: 150, height: 150, backgroundColor: '#065F89' }}>
+      <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" marginRight="20px">
+        <Avatar sx={{ width: 150, height: 150, backgroundColor: '#065F89', marginBottom: 2 }}>
           {isForm ? (
             <Button component="label" variant="contained" startIcon={<AddAPhotoIcon />}>
               <input type="file" hidden />
@@ -124,17 +124,17 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
             <AccountCircleIcon sx={{ fontSize: 150 }} />
           )}
         </Avatar>
-        <Typography variant="h6" sx={{ marginBottom: 1, textAlign: 'center', color: '#065F89' }}>
+        <Typography variant="h6" sx={{ textAlign: 'center', color: '#065F89' }}>
           {name || 'Name'}
         </Typography>
       </Box>
 
-      {/* Biography Details Section */}
-      <Box flex={0.7}>
+      {/* Biography Section */}
+      <Box flex={1} maxWidth="600px" marginLeft="20px">
         <Typography variant="h3" sx={{ marginBottom: 2, textAlign: 'center', color: '#065F89' }}>
           Biography
         </Typography>
-        <Box padding={2} border="1px solid #065F89" marginBottom={2} bgcolor="#065F89" color="whitesmoke" borderRadius={1}>
+        <Box padding={2} border="1px solid #065F89" bgcolor="#065F89" color="whitesmoke" borderRadius={1}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               {isForm ? (
@@ -152,9 +152,9 @@ const Biography = ({ isForm, name, age, position, email, phonenumber, nationalit
             </Grid>
             <Grid item xs={12}>
               {isForm ? (
-                renderTextField('Appearances', 'Appearances', formState.Appearances || '', handleInputChange, true)
+                renderTextField('Email', 'email', formState.Appearances || '', handleInputChange, true)
               ) : (
-                <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>Appearances: {Appearances || 'N/A'}</Typography>
+                <Typography variant="h6" sx={{ textOverflow: 'ellipsis', overflow: 'hidden' }}>Email: {email || 'N/A'}</Typography>
               )}
             </Grid>
             <Grid item xs={12}>
