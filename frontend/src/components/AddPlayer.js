@@ -51,9 +51,9 @@ const AddPlayer = () => {
   });
 
   return (
-    <div style={{ display: 'flex', gap: '10vh', justifyContent: 'center', marginTop: '4vh', marginBottom: '4vh' }}>
+    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4vh', marginBottom: '4vh', padding: '0 10vh' }}>
       {[0, 1, 2, 3].map((index) => (
-        <div key={index} style={{ textAlign: 'center' }}>
+        <div key={index} style={{ textAlign: 'center', flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <PersonAddIcon 
             onClick={() => handleClickOpen(index)} 
             style={{ cursor: 'pointer', fontSize: '3rem', color: '#065F89' }} 
@@ -110,7 +110,9 @@ const AddPlayer = () => {
             </DialogActions>
           </Dialog>
           {selectedPlayer[index] && (
-            <div style={{ color: '#065F89' }}>{selectedPlayer[index].name || ''}</div>
+            <div style={{ color: '#065F89', marginTop: '1rem', wordWrap: 'break-word', width: '100%' }}>
+              {selectedPlayer[index].name || ''}
+            </div>
           )}
         </div>
       ))}
