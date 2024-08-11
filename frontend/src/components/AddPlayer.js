@@ -15,6 +15,7 @@ const players = [
   { name: 'Neymar Jr.', team: 'PSG' },
   { name: 'Kylian Mbappé', team: 'PSG' },
   { name: 'Kevin De Bruyne', team: 'Manchester City' },
+  { name: '', team: '' }, // Option to reset the player selection
   // Add more players here...
 ];
 
@@ -42,7 +43,7 @@ const AddPlayer = () => {
   };
 
   const groupedOptions = players.map((option) => {
-    const firstLetter = option.name[0].toUpperCase();
+    const firstLetter = option.name[0] ? option.name[0].toUpperCase() : '';
     return {
       firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
       ...option,
@@ -52,7 +53,7 @@ const AddPlayer = () => {
   return (
     <div style={{ display: 'flex', gap: '10vh', justifyContent: 'center', marginTop: '4vh', marginBottom: '4vh' }}>
       {[0, 1, 2, 3].map((index) => (
-        <div key={index}>
+        <div key={index} style={{ textAlign: 'center' }}>
           <PersonAddIcon 
             onClick={() => handleClickOpen(index)} 
             style={{ cursor: 'pointer', fontSize: '3rem', color: '#065F89' }} 
@@ -60,26 +61,56 @@ const AddPlayer = () => {
           <Dialog 
             open={open[index]} 
             onClose={() => handleClose(index)}
-            maxWidth="md" // Increases the width of the popup
-            fullWidth // Ensures it uses the full width available
+            maxWidth="md"
+            fullWidth
           >
-            <DialogTitle>Select a Player</DialogTitle>
+            <DialogTitle sx={{ color: '#065F89' }}>Select a Player</DialogTitle>
             <DialogContent>
               <Autocomplete
                 options={groupedOptions.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
                 groupBy={(option) => option.firstLetter}
                 getOptionLabel={(option) => option.name}
-                renderInput={(params) => <TextField {...params} label="Search Player" />}
+                renderInput={(params) => (
+                  <TextField 
+                    {...params} 
+                    label="Search Player" 
+                    sx={{
+                      marginTop: '1rem',
+                      '& .MuiOutlinedInput-root': {
+                        '& fieldset': {
+                          borderColor: '#065F89',
+                        },
+                        '&:hover fieldset': {
+                          borderColor: '#065F89',
+                        },
+                        '&.Mui-focused fieldset': {
+                          borderColor: '#065F89',
+                        },
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: '#065F89',
+                      },
+                      '& .MuiInputBase-input': {
+                        color: '#065F89',
+                      },
+                    }}
+                  />
+                )}
                 onChange={(event, value) => handleSelectPlayer(value, index)}
-                sx={{ width: '100%' }} // Ensures the autocomplete field matches the popup width
+                sx={{
+                  width: '100%',
+                  '& .MuiAutocomplete-option': {
+                    color: '#065F89',
+                  },
+                }}
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={() => handleClose(index)}>Cancel</Button>
+              <Button onClick={() => handleClose(index)} sx={{color: "#065F89"}}>Cancel</Button>
             </DialogActions>
           </Dialog>
           {selectedPlayer[index] && (
-            <div>{selectedPlayer[index].name}</div>
+            <div style={{ color: '#065F89' }}>{selectedPlayer[index].name || ''}</div>
           )}
         </div>
       ))}
