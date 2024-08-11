@@ -10,16 +10,16 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 
 const players = [
-  { name: 'Lionel Messi', team: 'PSG' },
-  { name: 'Cristiano Ronaldo', team: 'Al-Nassr' },
-  { name: 'Neymar Jr.', team: 'PSG' },
-  { name: 'Kylian Mbappé', team: 'PSG' },
-  { name: 'Kevin De Bruyne', team: 'Manchester City' },
-  { name: '', team: '' }, // Option to reset the player selection
+  { name: 'Lionel Messi', team: 'PSG', stats: { passing: 90, shooting: 85, defending: 95, dribbling: 92, pace: 88, physical: 75, appearance: 80 } },
+  { name: 'Cristiano Ronaldo', team: 'Al-Nassr', stats: { passing: 88, shooting: 80, defending: 90, dribbling: 85, pace: 80, physical: 78, appearance: 85 } },
+  { name: 'Neymar Jr.', team: 'PSG', stats: { passing: 85, shooting: 82, defending: 88, dribbling: 80, pace: 85, physical: 82, appearance: 85 } },
+  { name: 'Kylian Mbappé', team: 'PSG', stats: { passing: 92, shooting: 88, defending: 94, dribbling: 90, pace: 87, physical: 84, appearance: 90 } },
+  { name: 'Kevin De Bruyne', team: 'Manchester City', stats: { passing: 85, shooting: 83, defending: 85, dribbling: 89, pace: 91, physical: 80, appearance: 83 } },
+  { name: '', team: '', stats: { passing: 0, shooting: 0, defending: 0, dribbling: 0, pace: 0, physical: 0, appearance: 0 } }, // Option to reset the player selection
   // Add more players here...
 ];
 
-const AddPlayer = () => {
+const AddPlayer = ({ onSelectPlayer }) => {
   const [open, setOpen] = useState([false, false, false, false]);
   const [selectedPlayer, setSelectedPlayer] = useState([null, null, null, null]);
 
@@ -40,6 +40,10 @@ const AddPlayer = () => {
     newSelectedPlayer[index] = player;
     setSelectedPlayer(newSelectedPlayer);
     handleClose(index);
+
+    if (onSelectPlayer) {
+      onSelectPlayer(newSelectedPlayer);
+    }
   };
 
   const groupedOptions = players.map((option) => {
@@ -50,13 +54,15 @@ const AddPlayer = () => {
     };
   });
 
+  const colors = ['#00A5E3', '#8DD7BF', '#FF97C5', '#FF5768'];
+
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '4vh', marginBottom: '4vh', padding: '0 10vh' }}>
+    <div style={{ display: 'flex', gap: '10vh', justifyContent: 'center', marginTop: '4vh', marginBottom: '4vh' }}>
       {[0, 1, 2, 3].map((index) => (
-        <div key={index} style={{ textAlign: 'center', flex: '1', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <div key={index} style={{ textAlign: 'center' }}>
           <PersonAddIcon 
             onClick={() => handleClickOpen(index)} 
-            style={{ cursor: 'pointer', fontSize: '3rem', color: '#065F89' }} 
+            style={{ cursor: 'pointer', fontSize: '3rem', color: colors[index] }} 
           />
           <Dialog 
             open={open[index]} 
@@ -110,7 +116,7 @@ const AddPlayer = () => {
             </DialogActions>
           </Dialog>
           {selectedPlayer[index] && (
-            <div style={{ color: '#065F89', marginTop: '1rem', wordWrap: 'break-word', width: '100%' }}>
+            <div style={{ color: colors[index], marginTop: '8px' }}>
               {selectedPlayer[index].name || ''}
             </div>
           )}
