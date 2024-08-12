@@ -1,7 +1,9 @@
 import './App.css';
-import PlayerAddEdit from './components/PlayerAddEdit';
+import ComparisonChart from './components/comparisonChart';
 function App() {
-  return <PlayerAddEdit />;
+  return (
+    <ComparisonChart />
+  )
 }
 
 export default App;

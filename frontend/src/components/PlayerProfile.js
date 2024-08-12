@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box } from '@mui/material';
 import ResponsiveAppBar from './Header';
-import Footer from './Footer';
+import Footer from './footer';
 import StatsTabs from './StatsTab';
 import Biography from './Biography';
 
