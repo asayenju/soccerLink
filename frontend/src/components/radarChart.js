@@ -71,15 +71,15 @@ const RadarChart = ({ selectedPlayers }) => {
 
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
-
+  
     // Destroy previous chart instance if it exists
     if (chartInstanceRef.current) {
       chartInstanceRef.current.destroy();
     }
-
+  
     // Colors for each player
     const colors = ['#00A5E3', '#8DD7BF', '#FF97C5', '#FF5768'];
-
+  
     // Prepare data for the radar chart based on selected label
     const datasets = selectedPlayers.map((player, index) => ({
       label: player ? player.name : `Player ${index + 1}`,
@@ -93,17 +93,18 @@ const RadarChart = ({ selectedPlayers }) => {
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: colors[index],
     }));
-
+  
     const data = {
       labels: labels,
       datasets: datasets,
     };
-
+  
     // Chart configuration
     const config = {
       type: 'radar',
       data: data,
       options: {
+        responsive: true,
         plugins: {
           legend: {
             display: false, // Hide the legend/key section
@@ -131,12 +132,13 @@ const RadarChart = ({ selectedPlayers }) => {
             },
           },
         },
+        maintainAspectRatio: true, // Allow custom width and height
       },
     };
-
+  
     // Create chart
     chartInstanceRef.current = new Chart(ctx, config);
-
+  
     // Cleanup chart instance on component unmount
     return () => {
       if (chartInstanceRef.current) {
@@ -144,10 +146,10 @@ const RadarChart = ({ selectedPlayers }) => {
       }
     };
   }, [selectedPlayers, selectedLabel]);
-
+  
   return (
-    <div style={{ width: '80%', margin: 'auto' }}>
-      <div style={{ position: 'relative', display: 'flex', justifyContent: 'flex-start' }}>
+    <div style={{ width: '720px', height: '720px', margin: 'auto', position: 'relative' }}>
+      <div style={{ position: 'absolute', top: 0, left: 0 }}>
         <Button
           id="fade-button"
           aria-controls={open ? 'fade-menu' : undefined}
