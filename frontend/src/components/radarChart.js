@@ -24,11 +24,6 @@ const RadarChart = ({ selectedPlayers }) => {
       'Goals Conceded',
       'Goals Conceded Inside Box',
       'Goals Conceded Outside Box',
-      'Own Goals',
-      'Penalty Goals Conceded',
-      'Shots On Target Faced',
-      'Shots On Target Faced Inside Box',
-      'Shots On Target Faced Outside Box',
     ],
     Discipline: ['Total Cards', 'Yellow Cards', 'Red Cards'],
     Duels: [
@@ -196,7 +191,7 @@ const RadarChart = ({ selectedPlayers }) => {
   }, [selectedPlayers, selectedLabel]);
 
   return (
-    <div style={{ width: '720px', height: '720px', margin: 'auto', position: 'relative' }}>
+    <div style={{ width: '800px', height: '800px', margin: 'auto', position: 'relative' }}>
       <div style={{ position: 'absolute', top: 0, left: 0 }}>
         <Button
           id="fade-button"
