@@ -99,6 +99,8 @@ const RadarChart = ({ selectedPlayers }) => {
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: colors[index],
+        // Attach player data to the dataset for access in tooltips
+        playerData: player,
       };
     });
 
@@ -106,9 +108,6 @@ const RadarChart = ({ selectedPlayers }) => {
       labels: labels,
       datasets: datasets,
     };
-
-    console.log('Labels:', labels);
-    console.log('Datasets:', datasets);
 
     const config = {
       type: 'radar',
@@ -122,9 +121,19 @@ const RadarChart = ({ selectedPlayers }) => {
           tooltip: {
             callbacks: {
               label: function(tooltipItem) {
-                // Get the actual value from the original data
-                const originalValue = selectedPlayers[tooltipItem.datasetIndex]?.stats[selectedLabel][labels[tooltipItem.dataIndex]] || 0;
-                return `${labels[tooltipItem.dataIndex]}: ${originalValue}`;
+                // Get the dataset and data index
+                const dataset = tooltipItem.dataset;
+                const dataIndex = tooltipItem.dataIndex;
+                
+                // Get the player name and value from the dataset
+                const playerName = dataset.playerData?.name || '';
+                const originalValue = selectedPlayers[tooltipItem.datasetIndex]?.stats[selectedLabel][labels[dataIndex]] || 0;
+
+                // Divide only the 'Minutes' value by 100 for tooltip display
+                const displayValue = labels[dataIndex] === 'Minutes' ? originalValue : originalValue;
+
+                // Return formatted tooltip label
+                return `${playerName}: ${displayValue}`;
               },
             },
           },

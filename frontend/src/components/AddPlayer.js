@@ -183,7 +183,7 @@ const players = [
         Games: 8,
         Minutes: 690,
         Starts: 8,
-        'Sub On': 0,
+        'Sub On': 4,
         'Sub Off': 1,
       },
       Defense: {
