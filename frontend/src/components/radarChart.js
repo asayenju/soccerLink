@@ -71,35 +71,45 @@ const RadarChart = ({ selectedPlayers }) => {
 
   useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
-  
-    // Destroy previous chart instance if it exists
+
     if (chartInstanceRef.current) {
       chartInstanceRef.current.destroy();
     }
-  
-    // Colors for each player
+
     const colors = ['#00A5E3', '#8DD7BF', '#FF97C5', '#FF5768'];
-  
+
     // Prepare data for the radar chart based on selected label
-    const datasets = selectedPlayers.map((player, index) => ({
-      label: player ? player.name : `Player ${index + 1}`,
-      data: labels.map(label => player?.stats[label.toLowerCase()] || 0),
-      fill: true,
-      backgroundColor: `${colors[index]}66`, // 40% opacity
-      borderColor: colors[index],
-      borderWidth: 3, // Bold line
-      pointBackgroundColor: colors[index],
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: colors[index],
-    }));
-  
+    const datasets = selectedPlayers.map((player, index) => {
+      const data = labels.map(label => {
+        // Divide only the 'Minutes' value by 100
+        if (label === 'Minutes') {
+          return player?.stats[selectedLabel][label] / 100 || 0;
+        }
+        return player?.stats[selectedLabel][label] || 0;
+      });
+
+      return {
+        label: player ? player.name : `Player ${index + 1}`,
+        data: data,
+        fill: true,
+        backgroundColor: `${colors[index]}66`,
+        borderColor: colors[index],
+        borderWidth: 3,
+        pointBackgroundColor: colors[index],
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: colors[index],
+      };
+    });
+
     const data = {
       labels: labels,
       datasets: datasets,
     };
-  
-    // Chart configuration
+
+    console.log('Labels:', labels);
+    console.log('Datasets:', datasets);
+
     const config = {
       type: 'radar',
       data: data,
@@ -107,46 +117,54 @@ const RadarChart = ({ selectedPlayers }) => {
         responsive: true,
         plugins: {
           legend: {
-            display: false, // Hide the legend/key section
+            display: false,
+          },
+          tooltip: {
+            callbacks: {
+              label: function(tooltipItem) {
+                // Get the actual value from the original data
+                const originalValue = selectedPlayers[tooltipItem.datasetIndex]?.stats[selectedLabel][labels[tooltipItem.dataIndex]] || 0;
+                return `${labels[tooltipItem.dataIndex]}: ${originalValue}`;
+              },
+            },
           },
         },
         elements: {
           line: {
-            borderWidth: 3, // Bold line
+            borderWidth: 3,
           },
         },
         scales: {
           r: {
+            max: 10,
             beginAtZero: true,
             ticks: {
-              display: false, // Hide the axis labels (0, 1, 2, etc.)
+              display: false,
             },
             pointLabels: {
-              color: '#065F89', // Label font color
+              color: '#065F89',
               font: {
-                size: 16, // Increase the font size
+                size: 16,
               },
             },
             grid: {
-              color: '#065F89', // Grid lines color
+              color: '#065F89',
             },
           },
         },
-        maintainAspectRatio: true, // Allow custom width and height
+        maintainAspectRatio: true,
       },
     };
-  
-    // Create chart
+
     chartInstanceRef.current = new Chart(ctx, config);
-  
-    // Cleanup chart instance on component unmount
+
     return () => {
       if (chartInstanceRef.current) {
         chartInstanceRef.current.destroy();
       }
     };
   }, [selectedPlayers, selectedLabel]);
-  
+
   return (
     <div style={{ width: '720px', height: '720px', margin: 'auto', position: 'relative' }}>
       <div style={{ position: 'absolute', top: 0, left: 0 }}>
@@ -156,9 +174,9 @@ const RadarChart = ({ selectedPlayers }) => {
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
-          sx={{color: "white", backgroundColor: "#065F89", padding: '2vh', '&:hover': {
-              backgroundColor: '#054a6e', // Hover background color
-            },}}
+          sx={{ color: "white", backgroundColor: "#065F89", padding: '2vh', '&:hover': {
+              backgroundColor: '#054a6e',
+            }, }}
         >
           {selectedLabel}
         </Button>
