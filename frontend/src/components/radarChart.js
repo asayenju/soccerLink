@@ -119,7 +119,11 @@ const RadarChart = ({ selectedPlayers }) => {
       Math.max(...datasets.map(dataset => dataset.data[index]))
     );
 
-    const max = Math.ceil(Math.max(...maxValues) / 10) * 10; // Round up to the nearest ten
+    // Calculate the rounded max value, rounding up to the nearest 5
+    const roundedMax = Math.ceil(Math.max(...maxValues) / 5) * 5;
+
+    // Set max to 10 if the maximum value is zero and it is a default case
+    const max = roundedMax === 0 ? 10 : roundedMax;
 
     const data = {
       labels: labels,
