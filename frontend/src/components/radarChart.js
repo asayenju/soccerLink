@@ -79,7 +79,7 @@ const RadarChart = ({ selectedPlayers }) => {
     const colors = ['#00A5E3', '#8DD7BF', '#FF97C5', '#FF5768'];
 
     // Prepare data for the radar chart based on selected label
-    const datasets = selectedPlayers.map((player, index) => {
+    const datasets = selectedPlayers.length > 0 ? selectedPlayers.map((player, index) => {
       const data = labels.map(label => {
         // Divide only the 'Minutes' value by 100
         if (label === 'Minutes') {
@@ -99,10 +99,27 @@ const RadarChart = ({ selectedPlayers }) => {
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: colors[index],
-        // Attach player data to the dataset for access in tooltips
         playerData: player,
       };
-    });
+    }) : [{
+      label: 'No Data',
+      data: labels.map(() => 0), // Default to zero data points
+      fill: true,
+      backgroundColor: '#CCCCCC66', // Light gray for no data
+      borderColor: '#CCCCCC',
+      borderWidth: 3,
+      pointBackgroundColor: '#CCCCCC',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: '#CCCCCC',
+    }];
+
+    // Calculate the max value dynamically
+    const maxValues = labels.map((label, index) => 
+      Math.max(...datasets.map(dataset => dataset.data[index]))
+    );
+
+    const max = Math.ceil(Math.max(...maxValues) / 10) * 10; // Round up to the nearest ten
 
     const data = {
       labels: labels,
@@ -145,7 +162,7 @@ const RadarChart = ({ selectedPlayers }) => {
         },
         scales: {
           r: {
-            max: 10,
+            max: max,
             beginAtZero: true,
             ticks: {
               display: false,
