@@ -285,6 +285,62 @@ const players = [
       },
     },
   },
+  {
+    name: '',
+    team: '',
+    stats: {
+      Appearance: {
+        Games: 0,
+        Minutes: 0,
+        Starts: 0,
+        'Sub On': 0,
+        'Sub Off': 0,
+      },
+      Defense: {
+        Interceptions: 0,
+        'Blocked Shots': 0,
+        'Clean Sheets': 0,
+        'Goals Conceded': 0,
+        'Goals Conceded Inside Box': 0,
+        'Goals Conceded Outside Box': 0,
+        'Own Goals': 0,
+        'Penalty Goals Conceded': 0,
+        'Shots On Target Faced': 0,
+        'Shots On Target Faced Inside Box': 0,
+        'Shots On Target Faced Outside Box': 0,
+      },
+      Discipline: {
+        'Total Cards': 0,
+        'Yellow Cards': 0,
+        'Red Cards': 0,
+      },
+      Duels: {
+        'Take Ons Overrun': 0,
+        'Duels Contested': 0,
+        'Tackles Made': 0,
+        'Fouls From Tackle Attempts': 0,
+        'Last Man Tackles Made': 0,
+        'Take Ons Completed': 0,
+        'Fouls Won': 0,
+        Fouls: 0,
+        'Penalties Won': 0,
+        'Aerial Duels Contested': 0,
+        'Aerial Duels Won': 0,
+        'Ground Duels Contested': 0,
+        'Ground Duels Won': 0,
+        'Duels Won': 0,
+      },
+      Goalkeeping: {
+        'Shots Faced': 0,
+        'Saves Made': 0,
+        'Saves Made In Box': 0,
+        'Saves Made Out Box': 0,
+        'Penalties Faced': 0,
+        'Penalties Saved': 0,
+      },
+    }
+   
+  }
 ];
 
 
