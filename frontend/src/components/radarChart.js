@@ -14,48 +14,90 @@ const RadarChart = ({ selectedPlayers }) => {
   const [selectedLabel, setSelectedLabel] = useState('Appearance');
   const open = Boolean(anchorEl);
 
-  // Data label categories
-  const labelsMapping = {
-    Appearance: ['Games', 'Minutes', 'Starts', 'Sub On', 'Sub Off'],
-    Defense: [
-      'Interceptions',
-      'Blocked Shots',
-      'Clean Sheets',
-      'Goals Conceded',
-      'Goals Conceded Inside Box',
-      'Goals Conceded Outside Box',
-      'Own Goals',
-      'Penalty Goals Conceded',
-      'Shots On Target Faced',
-      'Shots On Target Faced Inside Box',
-      'Shots On Target Faced Outside Box'
-    ],
-    Discipline: ['Total Cards', 'Yellow Cards', 'Red Cards'],
-    Duels: [
-      'Take Ons Overrun',
-      'Duels Contested',
-      'Tackles Made',
-      'Fouls From Tackle Attempts',
-      'Last Man Tackles Made',
-      'Take Ons Completed',
-      'Fouls Won',
-      'Fouls',
-      'Penalties Won',
-      'Aerial Duels Contested',
-      'Aerial Duels Won',
-      'Ground Duels Contested',
-      'Ground Duels Won',
-      'Duels Won',
-    ],
-    Goalkeeping: [
-      'Shots Faced',
-      'Saves Made',
-      'Saves Made In Box',
-      'Saves Made Out Box',
-      'Penalties Faced',
-      'Penalties Saved',
-    ],
-  };
+// Data label categories
+const labelsMapping = {
+  Appearance: ['Games', 'Minutes', 'Starts', 'Sub On', 'Sub Off'],
+  Defense: [
+    'Interceptions',
+    'Blocked Shots',
+    'Clean Sheets',
+    'Goals Conceded',
+    'Goals Conceded Inside Box',
+    'Goals Conceded Outside Box',
+    'Own Goals',
+    'Penalty Goals Conceded',
+    'Shots On Target Faced',
+    'Shots On Target Faced Inside Box',
+    'Shots On Target Faced Outside Box'
+  ],
+  Discipline: ['Total Cards', 'Yellow Cards', 'Red Cards'],
+  Duels: [
+    'Take Ons Overrun',
+    'Duels Contested',
+    'Tackles Made',
+    'Fouls From Tackle Attempts',
+    'Last Man Tackles Made',
+    'Take Ons Completed',
+    'Fouls Won',
+    'Fouls',
+    'Penalties Won',
+    'Aerial Duels Contested',
+    'Aerial Duels Won',
+    'Ground Duels Contested',
+    'Ground Duels Won',
+    'Duels Won',
+  ],
+  Goalkeeping: [
+    'Shots Faced',
+    'Saves Made',
+    'Saves Made In Box',
+    'Saves Made Out Box',
+    'Penalties Faced',
+    'Penalties Saved',
+  ],
+  Possession: [
+    'Handballs',
+    'Corners Won',
+    'Touches',
+    'Ball Recoveries',
+    'Possession Lost',
+    'Offsides',
+    'Touches In Opposition Box',
+    'Touches In Opposition Box %',
+    'Times Tackled'
+  ],
+  Shooting: [
+    'Total Shots',
+    'Shots On Target',
+    'Shots Off Target',
+    'Shots Blocked',
+    'Shots From Set Pieces',
+    'Penalties',
+    'Hit Woodwork',
+    'Shooting Accuracy',
+  ],
+  Passing: [
+    'Pass Attempts',
+    'Passes Completed',
+    'Assists',
+    'Chances Created',
+    'Opposition Half Pass Attempts',
+    'Opposition Half Passes Completed',
+    'Long Pass Attempts',
+    'Long Passes Completed',
+    'Cross Attempts',
+    'Crosses Completed',
+    'Open Play Crosses Completed',
+    'Corners Crosses',
+    'Through Balls',
+    'Lay Offs Completed',
+    'Passes Completed In Opposition Half',
+    'Passes Completed In Own Half',
+    'Forward Passes',
+    'Backward Passes',
+    'Sideways Passes',
+  ],
+};
 
   const labels = labelsMapping[selectedLabel];
 
@@ -86,6 +128,14 @@ const RadarChart = ({ selectedPlayers }) => {
           return player?.stats[selectedLabel][label] / 100 || 0;
         } else if (label === 'Interceptions') {
           return player?.stats[selectedLabel][label] / 2 || 0;
+        } else if (label === 'Touches') {
+          return player?.stats[selectedLabel][label] / 10 || 0;
+        } else if (label === 'Shooting Accuracy') {
+          return player?.stats[selectedLabel][label] / 4 || 0;
+        } else if (label === 'Pass Attempts') {
+          return player?.stats[selectedLabel][label] / 4 || 0;
+        } else if (label === 'Passes Completed') {
+          return player?.stats[selectedLabel][label] / 4 || 0;
         } else {
           return player?.stats[selectedLabel][label] || 0;
         }
