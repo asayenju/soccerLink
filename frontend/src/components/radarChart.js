@@ -24,6 +24,11 @@ const RadarChart = ({ selectedPlayers }) => {
       'Goals Conceded',
       'Goals Conceded Inside Box',
       'Goals Conceded Outside Box',
+      'Own Goals',
+      'Penalty Goals Conceded',
+      'Shots On Target Faced',
+      'Shots On Target Faced Inside Box',
+      'Shots On Target Faced Outside Box'
     ],
     Discipline: ['Total Cards', 'Yellow Cards', 'Red Cards'],
     Duels: [
@@ -79,8 +84,11 @@ const RadarChart = ({ selectedPlayers }) => {
         // Divide only the 'Minutes' value by 100
         if (label === 'Minutes') {
           return player?.stats[selectedLabel][label] / 100 || 0;
+        } else if (label === 'Interceptions') {
+          return player?.stats[selectedLabel][label] / 2 || 0;
+        } else {
+          return player?.stats[selectedLabel][label] || 0;
         }
-        return player?.stats[selectedLabel][label] || 0;
       });
 
       return {
@@ -145,7 +153,7 @@ const RadarChart = ({ selectedPlayers }) => {
                 const playerName = dataset.playerData?.name || '';
                 const originalValue = selectedPlayers[tooltipItem.datasetIndex]?.stats[selectedLabel][labels[dataIndex]] || 0;
 
-                // Divide only the 'Minutes' value by 100 for tooltip display
+                // Divide only the 'Minutes' value by 100 for chart display, but show the original value in tooltip
                 const displayValue = labels[dataIndex] === 'Minutes' ? originalValue : originalValue;
 
                 // Return formatted tooltip label
@@ -191,7 +199,7 @@ const RadarChart = ({ selectedPlayers }) => {
   }, [selectedPlayers, selectedLabel]);
 
   return (
-    <div style={{ width: '800px', height: '800px', margin: 'auto', position: 'relative' }}>
+    <div style={{ width: '750px', height: '800px', margin: 'auto', position: 'relative' }}>
       <div style={{ position: 'absolute', top: 0, left: 0 }}>
         <Button
           id="fade-button"
