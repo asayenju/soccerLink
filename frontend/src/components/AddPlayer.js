@@ -74,6 +74,14 @@ const players = [
         'Long Passes Completed': 10,
         'Cross Attempts': 10,
         'Crosses Completed': 6,
+        'Sideways Passes': 2,
+        'Backward Passes': 5,
+        'Forward Passes': 10,
+        'Lays Off Completed': 3,
+        'Passes Completed in Own Half': 11,
+        'Through Balls': 3,
+        'Corner Crosses': 4,
+        'Open Play Crosses Completed': 2
       },
       Possession: {
         Handballs: 0,
@@ -162,6 +170,14 @@ const players = [
         'Long Passes Completed': 15,
         'Cross Attempts': 12,
         'Crosses Completed': 7,
+        'Sideways Passes': 5,
+        'Backward Passes': 10,
+        'Forward Passes': 11,
+        'Lays Off Completed': 5,
+        'Passes Completed in Own Half': 1,
+        'Through Balls': 7,
+        'Corner Crosses': 5,
+        'Open Play Crosses Completed': 10
       },
       Possession: {
         Handballs: 1,
