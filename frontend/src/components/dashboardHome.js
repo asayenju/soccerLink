@@ -135,9 +135,42 @@ export default function DashboardHome() {
       </Container>
       
       {/* Dialog for Adding Player */}
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Add Player</DialogTitle>
-        <DialogContent>
+      <Dialog 
+        open={open} 
+        onClose={handleClose}
+        maxWidth="sm" // Set the maximum width of the dialog box
+        fullWidth // Makes the dialog box take the full width of the screen within maxWidth
+      >
+        <DialogTitle 
+          sx={{ 
+            color: theme.palette.primary.main,
+          }}
+        >
+          Add Player
+        </DialogTitle>
+        <DialogContent
+          sx={{
+            '& .MuiTextField-root': {
+              '& label': {
+                color: theme.palette.primary.main,
+              },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                  borderColor: theme.palette.primary.main,
+                },
+                '&:hover fieldset': {
+                  borderColor: theme.palette.primary.main,
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: theme.palette.primary.main,
+                },
+              },
+              '& .MuiInputBase-input': {
+                color: theme.palette.primary.main, // Set the typed text color to primary
+              },
+            },
+          }}
+        >
           <TextField
             autoFocus
             margin="dense"
@@ -152,7 +185,14 @@ export default function DashboardHome() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSave}>Add</Button>
+          <Button 
+            onClick={handleSave}
+            sx={{
+              color: theme.palette.primary.main,
+            }}
+          >
+            Add
+          </Button>
         </DialogActions>
       </Dialog>
 
