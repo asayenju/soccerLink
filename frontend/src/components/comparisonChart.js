@@ -4,7 +4,7 @@ import Footer from './footer';
 import AddPlayer from './AddPlayer';
 import RadarChart from './radarChart';
 
-const ComparisonChart = () => {
+const ComparisonChart = ({ showHeaderFooter = true }) => {
   const [selectedPlayers, setSelectedPlayers] = useState([null, null, null, null]);
 
   const handleSelectPlayer = (players) => {
@@ -13,10 +13,10 @@ const ComparisonChart = () => {
 
   return (
     <>
-      <ResponsiveAppBar />
+      {showHeaderFooter && <ResponsiveAppBar />}
       <AddPlayer onSelectPlayer={handleSelectPlayer} />
       <RadarChart selectedPlayers={selectedPlayers} />
-      <Footer />
+      {showHeaderFooter && <Footer />}
     </>
   );
 };

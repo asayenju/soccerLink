@@ -1,8 +1,8 @@
 import './App.css';
-import ComparisonChart from './components/comparisonChart';
+import DashboardHome from './components/dashboardHome';
 function App() {
   return (
-    <ComparisonChart />
+    <DashboardHome />
   )
 }
 
