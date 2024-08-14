@@ -7,6 +7,11 @@ import Button from '@mui/material/Button';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
 import ResponsiveAppBar from './Header';
 import Footer from './footer';
 
@@ -28,6 +33,23 @@ const theme = createTheme({
 });
 
 export default function DashboardHome() {
+  const [open, setOpen] = React.useState(false);
+  const [playerName, setPlayerName] = React.useState('');
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSave = () => {
+    // Handle saving the player name here
+    console.log('Player Name:', playerName);
+    setOpen(false);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -103,6 +125,7 @@ export default function DashboardHome() {
                   alignItems: 'center',
                   fontSize: '1.5rem',
                 }}
+                onClick={handleClickOpen}
               >
                 Add Player
               </Button>
@@ -111,6 +134,28 @@ export default function DashboardHome() {
         </Grid>
       </Container>
       
+      {/* Dialog for Adding Player */}
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Add Player</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="playerName"
+            label="Player Name"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={playerName}
+            onChange={(e) => setPlayerName(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleSave}>Add</Button>
+        </DialogActions>
+      </Dialog>
+
       <Footer />
     </ThemeProvider>
   );
