@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
-// Define the schema for the scout
 const scoutSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -15,15 +15,24 @@ const scoutSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // Reference to the players scouted by this scout
   players: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Player'
-  }]
+    ref: 'Player',
+  }],
 });
 
-// Create the model from the schema
-const Scout = mongoose.model('Scout', scoutSchema);
+// Hash password before saving
+scoutSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
-// Export the model
+// Password comparison method
+scoutSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
+const Scout = mongoose.model('Scout', scoutSchema);
 module.exports = Scout;
