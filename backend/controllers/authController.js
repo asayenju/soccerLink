@@ -1,37 +1,27 @@
-require('dotenv').config(); // Make sure this is required at the top
-
+require('dotenv').config();
 const Scout = require('../models/Scout');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+// Register a new scout
 exports.register = async (req, res) => {
     const { name, email, password } = req.body;
-    console.log('Received request:', req.body);
-  
+
     try {
         // Check if scout already exists
         let scout = await Scout.findOne({ email });
         if (scout) {
-            console.log('Scout already exists');
             return res.status(400).json({ msg: 'Scout already exists' });
         }
-  
-        // Create a new scout instance
-        scout = new Scout({
-            name,
-            email,
-            password: bcrypt.hashSync(password, 10),
-        });
-        console.log('Scout created:', scout);
-  
+
+        // Create a new scout instance with hashed password
+        scout = new Scout({ name, email, password });
+
         await scout.save();
-  
+
         // Generate JWT token
-        const token = jwt.sign({ id: scout._id }, process.env.JWT_SECRET, {
-            expiresIn: '1h',
-        });
-        console.log('Token generated:', token);
-  
+        const token = jwt.sign({ id: scout._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
         res.status(201).json({
             token,
             scout: {
@@ -41,7 +31,6 @@ exports.register = async (req, res) => {
             },
         });
     } catch (err) {
-        console.error('Error:', err);
         res.status(500).json({ error: 'Server error' });
     }
 };
@@ -51,24 +40,23 @@ exports.login = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        // Check if the scout exists
+        // Find the scout by email
         const scout = await Scout.findOne({ email });
         if (!scout) {
-            return res.status(400).json({ msg: 'Invalid credentials' });
+            return res.status(400).json({ msg: 'Invalid email' });
         }
 
-        // Check if the password is correct
+        // Compare the provided password with the stored hash
         const isMatch = await bcrypt.compare(password, scout.password);
         if (!isMatch) {
-            return res.status(400).json({ msg: 'Invalid credentials' });
+            return res.status(400).json({ msg: 'Invalid password' });
         }
 
         // Generate JWT token
-        const token = jwt.sign({ id: scout._id }, process.env.JWT_SECRET, {
-            expiresIn: '1h',
-        });
+        const token = jwt.sign({ id: scout._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         res.json({
+            msg: 'Successfully logged in',
             token,
             scout: {
                 id: scout._id,

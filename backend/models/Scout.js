@@ -29,5 +29,10 @@ scoutSchema.pre('save', async function (next) {
   next();
 });
 
+// Password comparison method
+scoutSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
 const Scout = mongoose.model('Scout', scoutSchema);
 module.exports = Scout;
