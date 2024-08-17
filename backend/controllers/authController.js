@@ -23,6 +23,7 @@ exports.register = async (req, res) => {
         const token = jwt.sign({ id: scout._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
         res.status(201).json({
+            msg: 'Successfully registered',
             token,
             scout: {
                 id: scout._id,
