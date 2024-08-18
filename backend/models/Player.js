@@ -6,25 +6,20 @@ const playerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  age: {
-    type: Number,
-    required: true,
+  birthdate: {
+    type: String,
   },
   position: {
     type: String,
-    required: true,
   },
   nationality: {
     type: String,
-    required: true,
   },
   email: {
     type: String,
-    required: true,
   },
   phone: {
     type: String,
-    required: true,
   },
   stats: {
     appearances: {
