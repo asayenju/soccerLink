@@ -1,8 +1,10 @@
+// playerRoutes.js
 const express = require('express');
-const { register, login } = require('../controllers/authController');
 const router = express.Router();
+const {getAllPlayers, addPlayer} = require('../controllers/playerController');
 
-router.post('/register', register);
-router.post('/login', login);
+// Define the route for getting all players
+router.get('/players', getAllPlayers);
+router.post('/players', addPlayer)
 
 module.exports = router;

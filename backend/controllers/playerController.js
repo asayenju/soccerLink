@@ -1,12 +1,10 @@
-const express = require('express');
-const router = express.Router();
 const Player = require('../models/Player');
 
 // Create a new player
-router.post('/players', async (req, res) => {
+exports.addPlayer = async (req, res) => {
   try {
       // Check if the name field is present
-      const { name } = req.body;
+      const { name, birthdate, position, nationality, email, phone, stats, scout } = req.body;
       if (!name) {
           return res.status(400).send({ message: 'Name is required.' });
       }
@@ -202,25 +200,28 @@ router.post('/players', async (req, res) => {
       const player = new Player(playerData);
       await player.save();
       res.status(201).send(player);
-  } catch (error) {
-      res.status(400).send(error);
+    } catch (error) {
+      console.error('Error adding player:', error.message);  // Log the error message
+      console.error('Stack Trace:', error.stack);  // Log the stack trace for more details
+      res.status(500).send({ message: 'Failed to add player.', error: error.message });
   }
-});
+};
 
 
 
 // Get all players
-router.get('/players', async (req, res) => {
+exports.getAllPlayers = async (req, res) => {
     try {
         const players = await Player.find();
         res.status(200).send(players);
     } catch (error) {
-        res.status(500).send(error);
+      console.error('Error fetching players:', error);
+      res.status(500).send(error);
     }
-});
+};
 
 // Get a specific player by ID
-router.get('/players/:id', async (req, res) => {
+exports.getPlayerById = async (req, res) => {
     try {
         const player = await Player.findById(req.params.id);
         if (!player) {
@@ -230,12 +231,12 @@ router.get('/players/:id', async (req, res) => {
     } catch (error) {
         res.status(500).send(error);
     }
-});
+};
 
 // Get a specific player by Name
-router.get('/players/:name', async (req, res) => {
+exports.getPlayerByName = async (req, res) => {
   try {
-      const player = await Player.findById(req.params.id);
+      const player = await Player.findById(req.params.name);
       if (!player) {
           return res.status(404).send({ message: 'Player not found' });
       }
@@ -243,12 +244,12 @@ router.get('/players/:name', async (req, res) => {
   } catch (error) {
       res.status(500).send(error);
   }
-});
+};
 
 // Get a specific player by Birth Date
-router.get('/players/:birthdate', async (req, res) => {
+exports.getPlayerByBirthDate = async (req, res) => {
   try {
-      const player = await Player.findById(req.params.id);
+      const player = await Player.findById(req.params.birthdate);
       if (!player) {
           return res.status(404).send({ message: 'Player not found' });
       }
@@ -256,12 +257,12 @@ router.get('/players/:birthdate', async (req, res) => {
   } catch (error) {
       res.status(500).send(error);
   }
-});
+};
 
 // Get a specific player by Position
-router.get('/players/:position', async (req, res) => {
+exports.getPlayerByPosition = async (req, res) => {
   try {
-      const player = await Player.findById(req.params.id);
+      const player = await Player.findById(req.params.position);
       if (!player) {
           return res.status(404).send({ message: 'Player not found' });
       }
@@ -269,12 +270,12 @@ router.get('/players/:position', async (req, res) => {
   } catch (error) {
       res.status(500).send(error);
   }
-});
+};
 
 // Get a specific player by Nationality
-router.get('/players/:nationality', async (req, res) => {
+exports.getPlayerByNationality = async (req, res) => {
   try {
-      const player = await Player.findById(req.params.id);
+      const player = await Player.findById(req.params.nationality);
       if (!player) {
           return res.status(404).send({ message: 'Player not found' });
       }
@@ -282,12 +283,12 @@ router.get('/players/:nationality', async (req, res) => {
   } catch (error) {
       res.status(500).send(error);
   }
-});
+};
 
 // Get a specific player by Email
-router.get('/players/:email', async (req, res) => {
+exports.getPlayerByEmail = async (req, res) => {
   try {
-      const player = await Player.findById(req.params.id);
+      const player = await Player.findById(req.params.email);
       if (!player) {
           return res.status(404).send({ message: 'Player not found' });
       }
@@ -295,12 +296,12 @@ router.get('/players/:email', async (req, res) => {
   } catch (error) {
       res.status(500).send(error);
   }
-});
+};
 
 // Get a specific player by Phone
-router.get('/players/:phone', async (req, res) => {
+exports.getPlayerByPhone = async (req, res) => {
   try {
-      const player = await Player.findById(req.params.id);
+      const player = await Player.findById(req.params.phone);
       if (!player) {
           return res.status(404).send({ message: 'Player not found' });
       }
@@ -308,10 +309,10 @@ router.get('/players/:phone', async (req, res) => {
   } catch (error) {
       res.status(500).send(error);
   }
-});
+};
 
 // Update a player by ID
-router.put('/players/:id', async (req, res) => {
+exports.updatePlayerById = async (req, res) => {
     try {
       const player = await Player.findOneAndUpdate(
         { id: req.params.id },
@@ -325,10 +326,10 @@ router.put('/players/:id', async (req, res) => {
     } catch (error) {
         res.status(400).send(error);
     }
-});
+};
 
 // Update a player by Name
-router.put('/players/:name', async (req, res) => {
+exports.updatePlayerByName = async (req, res) => {
   try {
       const player = await Player.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
       if (!player) {
@@ -338,10 +339,10 @@ router.put('/players/:name', async (req, res) => {
   } catch (error) {
       res.status(400).send(error);
   }
-});
+};
 
 // Update a player by Birth Date
-router.put('/players/:birthdate', async (req, res) => {
+exports.updatePlayerById = async (req, res) => {
   try {
     const player = await Player.findOneAndUpdate(
         { birthdate: req.params.birthdate },
@@ -355,9 +356,9 @@ router.put('/players/:birthdate', async (req, res) => {
 } catch (error) {
     res.status(500).send(error);
 }
-});
+};
 // Update a player by Position
-router.put('/players/:position', async (req, res) => {
+exports.updatePlayerByPosition = async (req, res) => {
   try {
     const player = await Player.findOneAndUpdate(
       { position: req.params.position },
@@ -371,10 +372,10 @@ router.put('/players/:position', async (req, res) => {
   } catch (error) {
       res.status(400).send(error);
   }
-});
+};
 
 // Update a player by Nationality
-router.put('/players/:nationality', async (req, res) => {
+exports.updatePlayerByNationality = async (req, res) => {
   try {
     const player = await Player.findOneAndUpdate(
       { nationality: req.params.nationality },
@@ -388,10 +389,10 @@ router.put('/players/:nationality', async (req, res) => {
   } catch (error) {
       res.status(400).send(error);
   }
-});
+};
 
 // Update a player by email
-router.put('/players/:email', async (req, res) => {
+exports.updatePlayerByEmail = async (req, res) => {
   try {
     const player = await Player.findOneAndUpdate(
       { email: req.params.email },
@@ -405,10 +406,10 @@ router.put('/players/:email', async (req, res) => {
   } catch (error) {
       res.status(400).send(error);
   }
-});
+};
 
 // Update a player by Phone Number
-router.put('/players/:phone', async (req, res) => {
+exports.updatePlayerByPhone = async (req, res) => {
   try {
     const player = await Player.findOneAndUpdate(
       { phone: req.params.phone },
@@ -422,10 +423,10 @@ router.put('/players/:phone', async (req, res) => {
   } catch (error) {
       res.status(400).send(error);
   }
-});
+};
 
 // Delete a player by ID
-router.delete('/players/:id', async (req, res) => {
+exports.deletePlayer = async (req, res) => {
     try {
         const player = await Player.findByIdAndDelete(req.params.id);
         if (!player) {
@@ -435,6 +436,4 @@ router.delete('/players/:id', async (req, res) => {
     } catch (error) {
         res.status(500).send(error);
     }
-});
-
-module.exports = router;
+};
