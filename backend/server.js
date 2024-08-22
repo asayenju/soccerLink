@@ -15,7 +15,7 @@ app.use(cors());
 app.use('/api/scouts', scoutRoutes);
 
 // Use the player routes
-app.use('/api/players', playerRoutes);
+app.use('/api', playerRoutes);
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI, {
