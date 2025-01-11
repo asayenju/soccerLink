@@ -192,7 +192,23 @@ exports.addPlayer = async (req, res) => {
                 mid3rd_pressure_per_90: req.body.stats?.possession?.mid3rd_pressure_per_90 || 0,
                 att3rd_pressure_per_90: req.body.stats?.possession?.att3rd_pressure_per_90 || 0,
               },
-
+              shooting: {
+                totalshots: req.body.stats?.shooting?.totalshots || 0,
+                shotson_target: req.body.stats?.shooting?.shotson_target|| 0,
+                shotsoff_target: req.body.stats?.shooting?.shotsoff_target|| 0,
+                shots_blocked: req.body.stats?.shooting?.shots_blocked|| 0,
+                shots_setpieces: req.body.stats?.shooting?.shots_setpieces|| 0,
+                penalties: req.body.stats?.shooting?.penalties || 0,
+                woodwork: req.body.stats?.shooting?.woodwork || 0,
+                totalshots_per_90: req.body.stats?.shooting?.totalshots_per_90 || 0,
+                shotson_target_per_90: req.body.stats?.shooting?.shotson_target_per_90|| 0,
+                shotsoff_target_per_90: req.body.stats?.shooting?.shotsoff_target_per_90|| 0,
+                shots_blocked_per_90: req.body.stats?.shooting?.shots_blocked_per_90|| 0,
+                shots_setpieces_per_90: req.body.stats?.shooting?.shots_setpieces_per_90|| 0,
+                penalties_per_90: req.body.stats?.shooting?.penalties_per_90 || 0,
+                woodwork_per_90: req.body.stats?.shooting?.woodwork_per_90 || 0,
+                shots_accuracy: req.body.stats?.shooting?.shots_accuracy || 0
+              }
 
           }
       };
@@ -211,229 +227,284 @@ exports.addPlayer = async (req, res) => {
 
 // Get all players
 exports.getAllPlayers = async (req, res) => {
-    try {
-        const players = await Player.find();
-        res.status(200).send(players);
-    } catch (error) {
+  try {
+      const players = await Player.find();
+      res.status(200).send(players);
+  } catch (error) {
       console.error('Error fetching players:', error);
       res.status(500).send(error);
-    }
+  }
 };
 
 // Get a specific player by ID
 exports.getPlayerById = async (req, res) => {
-    try {
-        const player = await Player.findById(req.params.id);
-        if (!player) {
-            return res.status(404).send({ message: 'Player not found' });
-        }
-        res.status(200).send(player);
-    } catch (error) {
-        res.status(500).send(error);
-    }
-};
-
-// Get a specific player by Name
-exports.getPlayerByName = async (req, res) => {
   try {
-      const player = await Player.findById(req.params.name);
+      const player = await Player.findById(req.params.id);
       if (!player) {
           return res.status(404).send({ message: 'Player not found' });
       }
       res.status(200).send(player);
   } catch (error) {
       res.status(500).send(error);
+  }
+};
+
+// Get a specific player by Name
+exports.getPlayerByName = async (req, res) => {
+  try {
+      const playerName = req.params.name; // Get the name from the route parameter
+      const player = await Player.findOne({ name: playerName }); // Find the player by name
+
+      if (!player) {
+          return res.status(404).send({ message: 'Player not found' });
+      }
+
+      res.status(200).send(player);
+  } catch (error) {
+      res.status(500).send({ message: 'Error retrieving player', error });
   }
 };
 
 // Get a specific player by Birth Date
 exports.getPlayerByBirthDate = async (req, res) => {
   try {
-      const player = await Player.findById(req.params.birthdate);
+      const birthdate = req.params.birthdate; // Get the birthdate from the route parameter
+      const player = await Player.findOne({ birthdate: birthdate }); // Find the player by birthdate
+
       if (!player) {
           return res.status(404).send({ message: 'Player not found' });
       }
+
       res.status(200).send(player);
   } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send({ message: 'Error retrieving player', error });
   }
 };
 
 // Get a specific player by Position
 exports.getPlayerByPosition = async (req, res) => {
   try {
-      const player = await Player.findById(req.params.position);
+      const position = req.params.position; // Get the position from the route parameter
+      const player = await Player.findOne({ position: position }); // Find the player by position
+
       if (!player) {
           return res.status(404).send({ message: 'Player not found' });
       }
+
       res.status(200).send(player);
   } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send({ message: 'Error retrieving player', error });
   }
 };
 
 // Get a specific player by Nationality
 exports.getPlayerByNationality = async (req, res) => {
   try {
-      const player = await Player.findById(req.params.nationality);
+      const nationality = req.params.nationality; // Get the nationality from the route parameter
+      const player = await Player.findOne({ nationality: nationality }); // Find the player by nationality
+
       if (!player) {
           return res.status(404).send({ message: 'Player not found' });
       }
+
       res.status(200).send(player);
   } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send({ message: 'Error retrieving player', error });
   }
 };
 
 // Get a specific player by Email
 exports.getPlayerByEmail = async (req, res) => {
   try {
-      const player = await Player.findById(req.params.email);
+      const email = req.params.email; // Get the email from the route parameter
+      const player = await Player.findOne({ email: email }); // Find the player by email
+
       if (!player) {
           return res.status(404).send({ message: 'Player not found' });
       }
+
       res.status(200).send(player);
   } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send({ message: 'Error retrieving player', error });
   }
 };
 
 // Get a specific player by Phone
 exports.getPlayerByPhone = async (req, res) => {
   try {
-      const player = await Player.findById(req.params.phone);
+      const phone = req.params.phone; // Get the phone from the route parameter
+      const player = await Player.findOne({ phone: phone }); // Find the player by phone
+
       if (!player) {
           return res.status(404).send({ message: 'Player not found' });
       }
+
       res.status(200).send(player);
   } catch (error) {
-      res.status(500).send(error);
+      res.status(500).send({ message: 'Error retrieving player', error });
   }
 };
 
-// Update a player by ID
-exports.updatePlayerById = async (req, res) => {
-    try {
-      const player = await Player.findOneAndUpdate(
-        { id: req.params.id },
-        { $set: req.body }, // Update the player data with the request body
-        { new: true, runValidators: true } // Return the updated player document
-      );
-        if (!player) {
-            return res.status(404).send({ message: 'Player not found' });
-        }
-        res.status(200).send(player);
-    } catch (error) {
-        res.status(400).send(error);
+/*
+const buildUpdateQuery = (basePath, data) => {
+  let updateQuery = {};
+
+  for (const key in data) {
+    if (typeof data[key] === 'object' && data[key] !== null && !Array.isArray(data[key])) {
+      // Recursively handle nested objects
+      Object.assign(updateQuery, buildUpdateQuery(`${basePath}.${key}`, data[key]));
+    } else {
+      // Assign value for non-object fields (leaf nodes)
+      updateQuery[`${basePath}.${key}`] = data[key];
     }
+  }
+
+  return updateQuery;
 };
 
-// Update a player by Name
+
 exports.updatePlayerByName = async (req, res) => {
   try {
-      const player = await Player.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-      if (!player) {
-          return res.status(404).send({ message: 'Player not found' });
-      }
-      res.status(200).send(player);
-  } catch (error) {
-      res.status(400).send(error);
-  }
-};
+    const updateData = req.body.stats || {};
 
-// Update a player by Birth Date
-exports.updatePlayerById = async (req, res) => {
-  try {
-    const player = await Player.findOneAndUpdate(
-        { birthdate: req.params.birthdate },
-        { $set: req.body }, // Update the player data with the request body
-        { new: true, runValidators: true } // Return the updated player document
-    );
-    if (!player) {
-        return res.status(404).send({ message: 'Player not found' });
+    // Build a dynamic query for nested fields
+    let updateQuery = {};
+
+    // Handle dynamic updates for each category in 'stats'
+    if (updateData.appearances) {
+      Object.assign(updateQuery, buildUpdateQuery('stats.appearances', updateData.appearances));
     }
+    if (updateData.possession) {
+      Object.assign(updateQuery, buildUpdateQuery('stats.possession', updateData.possession));
+    }
+    if (updateData.defense) {
+      Object.assign(updateQuery, buildUpdateQuery('stats.defense', updateData.defense));
+    }
+    if (updateData.discipline) {
+      Object.assign(updateQuery, buildUpdateQuery('stats.discipline', updateData.discipline));
+    }
+    if (updateData.passing) {
+      Object.assign(updateQuery, buildUpdateQuery('stats.passing', updateData.passing));
+    }
+    if (updateData.duels) {
+      Object.assign(updateQuery, buildUpdateQuery('stats.duels', updateData.duels));
+    }
+    if (updateData.shooting) {
+      Object.assign(updateQuery, buildUpdateQuery('stats.shooting', updateData.shooting));
+    }
+    if (updateData.goals) {
+      Object.assign(updateQuery, buildUpdateQuery('stats.goals', updateData.goals));
+    }
+    if (updateData.goalkeeping) {
+      Object.assign(updateQuery, buildUpdateQuery('stats.goalkeeping', updateData.goalkeeping));
+    }
+
+    // Handle general stats updates
+    if (req.body.stats) {
+      Object.assign(updateQuery, buildUpdateQuery('stats', req.body.stats));
+    }
+
+    // Handle non-stats fields like name, position, nationality, etc.
+    if (req.body.name) updateQuery['name'] = req.body.name;
+    if (req.body.position) updateQuery['position'] = req.body.position;
+    if (req.body.nationality) updateQuery['nationality'] = req.body.nationality;
+    if (req.body.age) updateQuery['age'] = req.body.age;
+
+    // Find and update player document
+    const player = await Player.findOneAndUpdate(
+      { name: req.params.name },
+      { $set: updateQuery },
+      { new: true, runValidators: true }
+    );
+
+    if (!player) {
+      return res.status(404).send({ message: 'Player not found' });
+    }
+
     res.status(200).send(player);
-} catch (error) {
-    res.status(500).send(error);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+};
+
+*/
+
+function buildUpdateQuery(fieldPath, nestedData) {
+  const updateQuery = {};
+  for (const [key, value] of Object.entries(nestedData)) {
+    updateQueary['${fieldPath}.${key}'] = value;
+  }
+  return updateQuery;
 }
-};
-// Update a player by Position
-exports.updatePlayerByPosition = async (req, res) => {
-  try {
-    const player = await Player.findOneAndUpdate(
-      { position: req.params.position },
-      { $set: req.body }, // Update the player data with the request body
-      { new: true, runValidators: true } // Return the updated player document
-    );
-      if (!player) {
-          return res.status(404).send({ message: 'Player not found' });
-      }
-      res.status(200).send(player);
-  } catch (error) {
-      res.status(400).send(error);
-  }
-};
 
-// Update a player by Nationality
-exports.updatePlayerByNationality = async (req, res) => {
-  try {
-    const player = await Player.findOneAndUpdate(
-      { nationality: req.params.nationality },
-      { $set: req.body }, // Update the player data with the request body
-      { new: true, runValidators: true } // Return the updated player document
-    );
-      if (!player) {
-          return res.status(404).send({ message: 'Player not found' });
-      }
-      res.status(200).send(player);
-  } catch (error) {
-      res.status(400).send(error);
-  }
-};
+exports.handleStatsUpdate = (updateData) => {
+  const updateQuery = {};
 
-// Update a player by email
-exports.updatePlayerByEmail = async (req, res) => {
-  try {
-    const player = await Player.findOneAndUpdate(
-      { email: req.params.email },
-      { $set: req.body }, // Update the player data with the request body
-      { new: true, runValidators: true } // Return the updated player document
-    );
-      if (!player) {
-          return res.status(404).send({ message: 'Player not found' });
-      }
-      res.status(200).send(player);
-  } catch (error) {
-      res.status(400).send(error);
+  if (updateData.appearances) {
+      Object.assign(updateQuery, buildUpdateQuery('stats.appearances', updateData.appearances));
   }
-};
+  if (updateData.shooting) {
+      Object.assign(updateQuery, buildUpdateQuery('stats.shooting', updateData.shooting));
+  }
+  if (updateData.passing) {
+      Object.assign(updateQuery, buildUpdateQuery('stats.passing', updateData.passing));
+  }
+  if (updateData.defense) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.defense', updateData.defense));
+  }
+  if (updateData.discipline) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.discipline', updateData.discipline));
+  }
+  if (updateData.duels) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.duels', updateData.duels))
+  }
+  if (updateData.goalkeeping) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.goalkeeping', updateData.goalkeeping))
+  }
+  if (updateData.goals) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.goals', updateData.goals))
+  }
+  if (updateData.possession) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.possession', updateData.possession))
+  }
 
-// Update a player by Phone Number
-exports.updatePlayerByPhone = async (req, res) => {
+  // Log the constructed query for debugging (optional)
+  console.log('Generated Update Query:', updateQuery);
+  return updateQuery; // Return the constructed query
+}
+
+exports.updatePlayerStats = async (req, res) => {
   try {
-    const player = await Player.findOneAndUpdate(
-      { phone: req.params.phone },
-      { $set: req.body }, // Update the player data with the request body
-      { new: true, runValidators: true } // Return the updated player document
-    );
-      if (!player) {
-          return res.status(404).send({ message: 'Player not found' });
+      const playerId = req.params.id; // Get player ID from request params
+      const updateData = req.body; // Get update data from request body
+
+      // Generate the update query
+      const updateQuery = exports.handleStatsUpdate(updateData);
+
+      // Update the player in the database
+      const updatedPlayer = await Player.findByIdAndUpdate(playerId, { $set: updateQuery }, { new: true });
+
+      if (!updatedPlayer) {
+          return res.status(404).json({ message: 'Player not found' });
       }
-      res.status(200).send(player);
+
+      res.status(200).json(updatedPlayer);
   } catch (error) {
-      res.status(400).send(error);
+      console.error('Error updating player stats:', error);
+      res.status(500).json({ message: 'Internal server error' });
   }
 };
 
 // Delete a player by ID
 exports.deletePlayer = async (req, res) => {
-    try {
-        const player = await Player.findByIdAndDelete(req.params.id);
-        if (!player) {
-            return res.status(404).send({ message: 'Player not found' });
-        }
-        res.status(200).send({ message: 'Player deleted successfully' });
-    } catch (error) {
-        res.status(500).send(error);
-    }
+  try {
+      const player = await Player.findByIdAndDelete(req.params.id); // Find and delete by _id
+      if (!player) {
+          return res.status(404).send({ message: 'Player not found' });
+      }
+      res.status(200).send({ message: 'Player deleted successfully' });
+  } catch (error) {
+      res.status(500).send(error);
+  }
 };
+
