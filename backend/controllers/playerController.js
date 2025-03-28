@@ -432,7 +432,7 @@ exports.updatePlayerByName = async (req, res) => {
 function buildUpdateQuery(fieldPath, nestedData) {
   const updateQuery = {};
   for (const [key, value] of Object.entries(nestedData)) {
-    updateQueary['${fieldPath}.${key}'] = value;
+    updateQuery[`${fieldPath}.${key}`] = value;  // Fixed variable name
   }
   return updateQuery;
 }
@@ -440,61 +440,69 @@ function buildUpdateQuery(fieldPath, nestedData) {
 exports.handleStatsUpdate = (updateData) => {
   const updateQuery = {};
 
-  if (updateData.appearances) {
-      Object.assign(updateQuery, buildUpdateQuery('stats.appearances', updateData.appearances));
-  }
-  if (updateData.shooting) {
-      Object.assign(updateQuery, buildUpdateQuery('stats.shooting', updateData.shooting));
-  }
-  if (updateData.passing) {
-      Object.assign(updateQuery, buildUpdateQuery('stats.passing', updateData.passing));
-  }
-  if (updateData.defense) {
-    Object.assign(updateQuery, buildUpdateQuery('stats.defense', updateData.defense));
-  }
-  if (updateData.discipline) {
-    Object.assign(updateQuery, buildUpdateQuery('stats.discipline', updateData.discipline));
-  }
-  if (updateData.duels) {
-    Object.assign(updateQuery, buildUpdateQuery('stats.duels', updateData.duels))
-  }
-  if (updateData.goalkeeping) {
-    Object.assign(updateQuery, buildUpdateQuery('stats.goalkeeping', updateData.goalkeeping))
-  }
-  if (updateData.goals) {
-    Object.assign(updateQuery, buildUpdateQuery('stats.goals', updateData.goals))
-  }
-  if (updateData.possession) {
-    Object.assign(updateQuery, buildUpdateQuery('stats.possession', updateData.possession))
+  // First check if updateData has stats (your data structure requires this)
+  if (!updateData.stats) {
+    console.warn("No 'stats' property in update data");
+    return updateQuery;
   }
 
-  // Log the constructed query for debugging (optional)
+  const { stats } = updateData;  // Destructure the stats object
+
+  // Now check each category within stats
+  if (stats.appearances) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.appearances', stats.appearances));
+  }
+  if (stats.shooting) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.shooting', stats.shooting));
+  }
+  if (stats.passing) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.passing', stats.passing));
+  }
+  if (stats.defense) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.defense', stats.defense));
+  }
+  if (stats.discipline) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.discipline', stats.discipline));
+  }
+  if (stats.duels) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.duels', stats.duels));
+  }
+  if (stats.goalkeeping) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.goalkeeping', stats.goalkeeping));
+  }
+  if (stats.goals) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.goals', stats.goals));
+  }
+  if (stats.possession) {
+    Object.assign(updateQuery, buildUpdateQuery('stats.possession', stats.possession));
+  }
+
   console.log('Generated Update Query:', updateQuery);
-  return updateQuery; // Return the constructed query
-}
+  return updateQuery;
+};
 
 exports.updatePlayerStats = async (req, res) => {
   try {
-      const playerId = req.params.id; // Get player ID from request params
-      const updateData = req.body; // Get update data from request body
+    console.log("--- NEW REQUEST ---");
+    console.log("Player ID:", req.params.id);
+    console.log("Request Body:", JSON.stringify(req.body, null, 2));
+    
+    const updateQuery = exports.handleStatsUpdate(req.body);
+    console.log("Generated Update Query:", JSON.stringify(updateQuery, null, 2));
 
-      // Generate the update query
-      const updateQuery = exports.handleStatsUpdate(updateData);
+    const updatedPlayer = await Player.findByIdAndUpdate(
+      req.params.id,
+      { $set: updateQuery },
+      { new: true }
+    );
 
-      // Update the player in the database
-      const updatedPlayer = await Player.findByIdAndUpdate(playerId, { $set: updateQuery }, { new: true });
-
-      if (!updatedPlayer) {
-          return res.status(404).json({ message: 'Player not found' });
-      }
-
-      res.status(200).json(updatedPlayer);
+    console.log("Updated Player:", updatedPlayer);
+    res.status(200).json(updatedPlayer);
   } catch (error) {
-      console.error('Error updating player stats:', error);
-      res.status(500).json({ message: 'Internal server error' });
+    console.error("Full Error:", error);
+    res.status(500).json({ message: error.message });
   }
 };
-
 // Delete a player by ID
 exports.deletePlayer = async (req, res) => {
   try {
