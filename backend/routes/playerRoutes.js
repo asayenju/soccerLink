@@ -13,6 +13,6 @@ router.get('/players/nationality/:nationality', getPlayerByNationality)
 router.get('/players/birthdate/:birthdate', getPlayerByBirthDate)
 router.get('/players/phone/:phone', getPlayerByPhone)
 router.get('/players/position/:position', getPlayerByPosition)
-router.put('/players/id/:id', updatePlayerById)
+//router.put('/players/:id', updatePlayerById)
 //router.put('/players/name/:name', updatePlayerByName)
 module.exports = router;
