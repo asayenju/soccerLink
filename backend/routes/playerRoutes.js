@@ -18,4 +18,6 @@ router.get('/players/position/:position', getPlayerByPosition);
 // PUT update route (comes after all specific GETs)
 router.put('/players/:id', updatePlayerStats);
 
+// DELETE route to delete a player
+router.delete('/players/:id', deletePlayer)
 module.exports = router;
