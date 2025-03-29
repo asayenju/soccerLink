@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const scoutRoutes = require('./routes/authRoutes');
+const playerRoutes = require('./routes/playerRoutes')
 require('dotenv').config();
 
 const app = express();
@@ -12,6 +13,9 @@ app.use(cors());
 
 // Routes
 app.use('/api/scouts', scoutRoutes);
+
+// Use the player routes
+app.use('/api', playerRoutes);
 
 // Database Connection
 mongoose.connect(process.env.MONGO_URI, {
