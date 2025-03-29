@@ -1,8 +1,8 @@
 import './App.css';
-import DashboardHome from './components/dashboardHome';
+import HomePage from './components/HomePage';
 function App() {
   return (
-    <DashboardHome />
+    <HomePage />
   )
 }
 
