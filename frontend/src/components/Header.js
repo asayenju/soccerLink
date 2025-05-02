@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {Link as RouterLink} from 'react-router-dom';
 
 const pages = ['Home', 'Compare Players'];
 const settings = [ 'Players', 'Dashboard', 'Logout'];
@@ -166,6 +167,8 @@ function ResponsiveAppBar({isLoggedin = true} ) {
         </Avatar>
       }
         */
+      component={RouterLink}
+      to="/signin"
     >
       Login
     </Button>

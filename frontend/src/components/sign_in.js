@@ -12,6 +12,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import {Link as RouterLink} from 'react-router-dom';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -90,7 +91,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="#" variant="body2" component={RouterLink} to="/signup">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
