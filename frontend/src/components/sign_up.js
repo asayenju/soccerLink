@@ -12,7 +12,10 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {Link as Routerlink} from 'react-router-dom';
+import {Link as RouterLink} from 'react-router-dom';
+import {registerScout} from '../services/authService'; // Adjust the import path as necessary
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -24,15 +27,81 @@ const defaultTheme = createTheme( {palette: {
 });
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    allowExtraEmails: false
+  });
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [apiError, setApiError] = useState('');
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === 'allowExtraEmails' ? checked : value
+    }));
   };
 
+  const validate = () => {
+    const newErrors = {};
+    
+    if (!formData.firstName.trim()) newErrors.firstName = 'First name is required';
+    if (!formData.lastName.trim()) newErrors.lastName = 'Last name is required';
+    if (!formData.email.trim()) newErrors.email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) 
+      newErrors.email = 'Email is invalid';
+    if (!formData.password) newErrors.password = 'Password is required';
+    else if (formData.password.length < 6) 
+      newErrors.password = 'Password must be at least 6 characters';
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    
+    if (!validate()) return;
+    
+    setIsSubmitting(true);
+    setApiError('');
+
+    try {
+      // Combine first and last name for your backend
+      const scoutData = {
+        name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        password: formData.password,
+        preferences: {
+          marketingEmails: formData.allowExtraEmails
+        }
+      };
+
+      // Call your auth service
+      const response = await registerScout(scoutData);
+      
+      // Handle successful registration
+      console.log('Registration successful:', response);
+      
+      // Redirect to login or dashboard
+      navigate('/signin', { 
+        state: { 
+          message: 'Registration successful! Please sign in.' 
+        } 
+      });
+      
+    } catch (error) {
+      console.error('Registration error:', error);
+      setApiError(error.message || 'Registration failed. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -51,6 +120,13 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
+          
+          {apiError && (
+            <Typography color="error" sx={{ mt: 2 }}>
+              {apiError}
+            </Typography>
+          )}
+          
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
@@ -62,6 +138,10 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  error={!!errors.firstName}
+                  helperText={errors.firstName}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -72,6 +152,10 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  error={!!errors.lastName}
+                  helperText={errors.lastName}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -82,6 +166,10 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  error={!!errors.email}
+                  helperText={errors.email}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -93,11 +181,22 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  error={!!errors.password}
+                  helperText={errors.password}
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  control={
+                    <Checkbox 
+                      name="allowExtraEmails"
+                      checked={formData.allowExtraEmails}
+                      onChange={handleChange}
+                      color="primary" 
+                    />
+                  }
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
@@ -107,13 +206,13 @@ export default function SignUp() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={isSubmitting}
             >
-              Sign Up
+              {isSubmitting ? 'Signing Up...' : 'Sign Up'}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2" component={Routerlink} to="/signin">
-
+                <Link component={RouterLink} to="/signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
