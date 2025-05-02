@@ -252,7 +252,7 @@ useEffect(() => {
       chartInstanceRef.current.destroy();
     }
   };
-}, [selectedPlayers, selectedLabel, statsType]);
+}, [selectedPlayers, selectedLabel, statsType, labels]);
 
 return (
   <div style={{ width: '750px', height: '800px', margin: 'auto', position: 'relative' }}>

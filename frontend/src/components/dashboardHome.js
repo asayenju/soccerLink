@@ -25,12 +25,15 @@ const theme = createTheme({
     },
     secondary: {
       main: '#FF9A5C',
+      contrastText: '#ffffff'
     },
     success: {
       main: '#5cff9a',
+      contrastText: '#ffffff'
     },
     info: {
       main: '#9a5cff',
+      contrastText: '#ffffff'
     },
   },
 });
