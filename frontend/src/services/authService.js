@@ -18,3 +18,12 @@ export const registerScout = async (scoutData) => {
     throw error.response?.data || { message: 'Registration failed' };
   }
 };
+
+export const logoutScout = async () => {
+  try {
+    const response = await api.post('/auth/logout');
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: 'Logout failed' };
+  }
+};

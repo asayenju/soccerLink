@@ -4,7 +4,7 @@ import Footer from './footer';
 import DashboardHome from './dashboardHome';
 import AttackRadarChart from './radarChartHome';
 
-const HomePage = () => {
+const HomePage = ({isLoggedin = true}) => {
     // Sample player data - replace with your actual data
     const players = [
         {

@@ -12,18 +12,22 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import {Link as RouterLink} from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext'; // Import your auth context
 
 const pages = ['Home', 'Compare Players'];
-const settings = [ 'Players', 'Dashboard', 'Logout'];
+const settings = ['Players', 'Dashboard', 'Logout'];
 
-function ResponsiveAppBar({isLoggedin = true} ) {
+function ResponsiveAppBar({ isLoggedin = true }) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const { logout } = useAuth(); // Get logout function from auth context
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -36,6 +40,34 @@ function ResponsiveAppBar({isLoggedin = true} ) {
     setAnchorElUser(null);
   };
 
+  const handleLogout = async () => {
+    try {
+      await logout(); // Call the logout function
+      navigate('/signin'); // Redirect to signin page
+    } catch (error) {
+      console.error('Logout failed:', error);
+    } finally {
+      handleCloseUserMenu();
+    }
+  };
+
+  const handleSettingClick = (setting) => {
+    handleCloseUserMenu();
+    switch (setting) {
+      case 'Players':
+        navigate('/players');
+        break;
+      case 'Dashboard':
+        navigate('/dashboard');
+        break;
+      case 'Logout':
+        handleLogout();
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <AppBar position="static" sx={{ backgroundColor: '#065F89', width: '100%' }}>
       <Container maxWidth="xl">
@@ -43,8 +75,8 @@ function ResponsiveAppBar({isLoggedin = true} ) {
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="#"
+            component={RouterLink}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -88,7 +120,12 @@ function ResponsiveAppBar({isLoggedin = true} ) {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem 
+                  key={page} 
+                  onClick={handleCloseNavMenu}
+                  component={RouterLink}
+                  to={page === 'Home' ? '/' : `/${page.toLowerCase().replace(' ', '-')}`}
+                >
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -97,8 +134,8 @@ function ResponsiveAppBar({isLoggedin = true} ) {
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="#"
+            component={RouterLink}
+            to="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -117,6 +154,8 @@ function ResponsiveAppBar({isLoggedin = true} ) {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
+                component={RouterLink}
+                to={page === 'Home' ? '/' : `/${page.toLowerCase().replace(' ', '-')}`}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
@@ -125,58 +164,58 @@ function ResponsiveAppBar({isLoggedin = true} ) {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-  {isLoggedin ? (
-    <>
-      <Tooltip title="Open settings">
-        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar sx={{ width: 40, height: 40 }}>
-            <AccountCircleIcon sx={{ fontSize: 40, backgroundColor: '#065F89' }} />
-          </Avatar>
-        </IconButton>
-      </Tooltip>
-      <Menu
-        sx={{ mt: '45px' }}
-        id="menu-appbar"
-        anchorEl={anchorElUser}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        open={Boolean(anchorElUser)}
-        onClose={handleCloseUserMenu}
-      >
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            <Typography textAlign="center">{setting}</Typography>
-          </MenuItem>
-        ))}
-      </Menu>
-    </>
-  ) : (
-    <Button 
-      color="inherit"
-      /*
-      startIcon={
-        <Avatar sx={{ width: 24, height: 24 }}>
-          <AccountCircleIcon sx={{ fontSize: 24, backgroundColor: '#065F89' }} />
-        </Avatar>
-      }
-        */
-      component={RouterLink}
-      to="/signin"
-    >
-      Login
-    </Button>
-  )}
-</Box>
+            {isLoggedin ? (
+              <>
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <Avatar sx={{ width: 40, height: 40 }}>
+                      <AccountCircleIcon sx={{ fontSize: 40, backgroundColor: '#065F89' }} />
+                    </Avatar>
+                  </IconButton>
+                </Tooltip>
+                <Menu
+                  sx={{ mt: '45px' }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {settings.map((setting) => (
+                    <MenuItem 
+                      key={setting} 
+                      onClick={() => handleSettingClick(setting)}
+                    >
+                      <Typography textAlign="center">{setting}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </>
+            ) : (
+              <Button 
+                color="inherit"
+                component={RouterLink}
+                to="/signin"
+                startIcon={
+                  <AccountCircleIcon sx={{ fontSize: 24 }} />
+                }
+              >
+                Login
+              </Button>
+            )}
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
+
 export default ResponsiveAppBar;

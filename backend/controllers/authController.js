@@ -69,3 +69,12 @@ exports.login = async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 };
+
+exports.logout = (req, res) => {
+    // This is a simple logout that just tells the client to clear tokens
+    // The actual invalidation happens client-side
+    res.status(200).json({ 
+      success: true,
+      message: 'Successfully logged out'
+    });
+  };
